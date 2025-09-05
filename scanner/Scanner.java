@@ -7,8 +7,7 @@ import java.io.*;
  * @author Daniel Zhu
  * @version 082025
  *
- * Usage:
- * <Insert a comment that shows how to use this object>
+ * Usage: See ScannerTester
  *
  */
 public class Scanner
@@ -156,6 +155,12 @@ public class Scanner
             {
                 token.append(currentChar);
                 getNextChar();
+            }
+            else if (!eof && currentChar == '/' && token.toString().equals("/"))
+            {
+                // skip all characters until a newline is encountered
+                while (getNextChar() && currentChar != '\n');
+                return nextToken();
             }
         }
         else

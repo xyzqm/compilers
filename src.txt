@@ -5,10 +5,11 @@ RETURN n * n;
 END;
 BEGIN
 x := 1;
+// pascal comment alskdjflaksdjf
 WHILE x <= 10 DO
 BEGIN
 WRITELN(square(x));
-x := x + 1;
+x := x / 1;
 END;
 END;
 .
