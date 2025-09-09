@@ -165,16 +165,22 @@ public class Scanner
         else if (CHARS.contains("" + currentChar))
         {
             eat(currentChar);
-            if (!eof &&currentChar == '=' &&"<>=:".contains(token.toString()))
+            if (!eof)
             {
-                token.append(currentChar);
-                eat(currentChar);
-            }
-            else if (!eof && currentChar == '/' && token.toString().equals("/"))
-            {
-                // skip all characters until a newline is encountered
-                while (eat(currentChar) && currentChar != '\n');
-                return nextToken();
+                if (
+                        currentChar == '=' &&"<>:".contains(token.toString()) ||
+                        currentChar == '>' && token.toString().equals("<")
+                )
+                {
+                    token.append(currentChar);
+                    eat(currentChar);
+                }
+                else if (currentChar == '/' && token.toString().equals("/"))
+                {
+                    // skip all characters until a newline is encountered
+                    while (eat(currentChar) && currentChar != '\n');
+                    return nextToken();
+                }
             }
         }
         else

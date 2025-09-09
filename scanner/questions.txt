@@ -1,0 +1,1 @@
+1. Both of these characters should also result in the keyword IF being recognized, similarly to if there had been a space.
