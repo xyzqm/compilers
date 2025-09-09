@@ -93,6 +93,20 @@ public class Scanner
     }
 
     /**
+     * Eats the next character if it matches the expected character.
+     * @param expected the expected character
+     * @throws ScanErrorException if the character is not as expected
+     */
+
+    private boolean eat(char expected) throws ScanErrorException
+    {
+        if (currentChar != expected)
+        {
+            throw new ScanErrorException("Unexpected character: " + currentChar);
+        }
+        return getNextChar();
+    }
+    /**
      * Method: isIdentifier
      * @param ch the character to check
      * @return whether the character is an identifier
@@ -136,30 +150,30 @@ public class Scanner
         StringBuilder token = new StringBuilder(String.valueOf(currentChar));
         if (isIdentifier(currentChar))
         {
-            while (getNextChar() && (isIdentifier(currentChar) || isDigit(currentChar)))
+            while (eat(currentChar) && (isIdentifier(currentChar) || isDigit(currentChar)))
             {
                 token.append(currentChar);
             }
         }
         else if (isDigit(currentChar))
         {
-            while (getNextChar() && isDigit(currentChar))
+            while (eat(currentChar) && isDigit(currentChar))
             {
                 token.append(currentChar);
             }
         }
         else if (CHARS.contains("" + currentChar))
         {
-            getNextChar();
+            eat(currentChar);
             if (!eof &&currentChar == '=' &&"<>=:".contains(token.toString()))
             {
                 token.append(currentChar);
-                getNextChar();
+                eat(currentChar);
             }
             else if (!eof && currentChar == '/' && token.toString().equals("/"))
             {
                 // skip all characters until a newline is encountered
-                while (getNextChar() && currentChar != '\n');
+                while (eat(currentChar) && currentChar != '\n');
                 return nextToken();
             }
         }
