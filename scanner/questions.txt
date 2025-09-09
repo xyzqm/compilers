@@ -1,1 +1,1 @@
-1. Both of these characters should also result in the keyword IF being recognized, similarly to if there had been a space.
+1. Both of these characters should also result in the keyword IF being recognized, similarly to if there had been a space. However, in the case of a newline, we should also skip over all remaining whitespace.

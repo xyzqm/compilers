@@ -89,6 +89,10 @@ public class Scanner
                 break;
             }
         }
+        if (!eof && currentChar == '.')
+        {
+            eof = true;
+        }
         return !eof;
     }
 
@@ -178,7 +182,10 @@ public class Scanner
                 else if (currentChar == '/' && token.toString().equals("/"))
                 {
                     // skip all characters until a newline is encountered
-                    while (eat(currentChar) && currentChar != '\n');
+                    while (currentChar != '\n')
+                    {
+                        eat(currentChar);
+                    }
                     return nextToken();
                 }
             }
