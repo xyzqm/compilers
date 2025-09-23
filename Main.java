@@ -1,3 +1,8 @@
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
+import parser.ParserTester;
 import scanner.ScannerTester;
 
 /**
@@ -11,8 +16,10 @@ public class Main
      * Main method for the compiler project.
      * @param args Command-line arguments.
      */
-    public static void main(String[] args)
+    public static void main(String[] args) throws IOException
     {
-        ScannerTester.main(args);
+        // read src.txt into a String
+        String src = new String(Files.readAllBytes(Paths.get("src.txt")));
+        ParserTester.main(new String[]{src});
     }
 }

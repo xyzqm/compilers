@@ -1,16 +1,9 @@
-VAR x;
-PROCEDURE square(n);
 BEGIN
-RETURN n * n;
+x := 2;
+y := x + 1;
+x := x + y;
+WRITELN(x);
+WRITELN(y);
+WRITELN(x * y);
 END;
-BEGIN
-x := 1;
-// pascal comment alskdjflaksdjf .
-WHILE x <> 10 DO
-BEGIN
-WRITELN(square(x));
-x := x / 1;
-END;
-END;
-// $
-// COMMENTS
+.
