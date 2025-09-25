@@ -23,26 +23,48 @@ public class Parser
     // map from variable to integer values
     Map<String, Integer> vars = new HashMap<>();
 
-    public Parser(String input) throws ScanErrorException {
+    /**
+     * Constructor for Parser class.
+     * @param input The input string to be parsed.
+     * @throws ScanErrorException If an error occurs during scanning.
+     */
+    public Parser(String input) throws ScanErrorException
+    {
         scanner = new Scanner(input);
         eat("");
     }
 
+    /**
+     * Consumes the current token if it matches the expected token.
+     * @param token The expected token.
+     * @throws ScanErrorException If an error occurs during scanning.
+     */
     void eat(String token) throws ScanErrorException
     {
-        if (!currentToken.equals(token)) {
+        if (!currentToken.equals(token))
+        {
             throw new RuntimeException("Expected " + token + ", but found " + currentToken);
         }
         currentToken = scanner.nextToken();
     }
 
-    private int parseNumber() throws ScanErrorException {
-        try {
+    /**
+     * Parses a number token.
+     * @return The parsed number.
+     * @throws ScanErrorException If an error occurs during scanning.
+     */
+    private int parseNumber() throws ScanErrorException
+    {
+        try
+        {
             int number = Integer.parseInt(currentToken);
             eat(currentToken);
             return number;
-        } catch (NumberFormatException e) {
-            if (vars.containsKey(currentToken)) {
+        }
+        catch (NumberFormatException e)
+        {
+            if (vars.containsKey(currentToken))
+            {
                 int value = vars.get(currentToken);
                 eat(currentToken);
                 return value;
@@ -51,7 +73,13 @@ public class Parser
         }
     }
 
-    private int parseFactor() throws ScanErrorException {
+    /**
+     * Parses a factor consisting of a number, a variable, or a parenthesized expression.
+     * @return The parsed factor.
+     * @throws ScanErrorException If an error occurs during scanning.
+     */
+    private int parseFactor() throws ScanErrorException
+    {
         if (currentToken.equals("("))
         {
             eat("(");
@@ -71,10 +99,10 @@ public class Parser
     }
 
     /**
-    * Parses an expression consisting of negation, *, and /
-    * @return the result of the expression
-    * @throws ScanErrorException
- */
+     * Parses an expression consisting of negation, *, and /
+     * @return the result of the expression
+     * @throws ScanErrorException If an error occurs during scanning.
+     */
     private int parseTerm() throws ScanErrorException
     {
         int n = parseFactor();
@@ -96,10 +124,10 @@ public class Parser
     }
 
     /**
-    * Parses field expressions.
-    * @return the result of the expression
-    * @throws ScanErrorException
- */
+     * Parses field expressions.
+     * @return the result of the expression
+     * @throws ScanErrorException If an error occurs during scanning.
+     */
     private int parseExpression() throws ScanErrorException
     {
         int n = parseTerm();
@@ -122,8 +150,10 @@ public class Parser
 
     /**
      * Parses statements of the form WRITELN(expr) or BEGIN stmts END;
+     * @throws ScanErrorException If an error occurs during scanning.
      */
-    public void parseStatement() throws ScanErrorException {
+    public void parseStatement() throws ScanErrorException
+    {
         if (currentToken.equals("WRITELN"))
         {
             eat("WRITELN");

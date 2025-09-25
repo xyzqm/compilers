@@ -4,6 +4,6 @@ y := x + 1;
 x := x + y;
 WRITELN(x);
 WRITELN(y);
-WRITELN(x * y);
+WRITELN(x * y * (x + y) / 4);
 END;
 .

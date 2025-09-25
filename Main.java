@@ -15,6 +15,7 @@ public class Main
     /**
      * Main method for the compiler project.
      * @param args Command-line arguments.
+     * @throws IOException If an I/O error occurs.
      */
     public static void main(String[] args) throws IOException
     {
