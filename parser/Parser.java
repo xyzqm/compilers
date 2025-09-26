@@ -19,6 +19,7 @@ public class Parser
 {
     Scanner scanner;
     String currentToken = "";
+    java.util.Scanner sc = new java.util.Scanner(System.in);
 
     // map from variable to integer values
     Map<String, Integer> vars = new HashMap<>();
@@ -160,6 +161,15 @@ public class Parser
             eat("(");
             System.out.println(parseExpression());
             eat(")");
+        }
+        else if (currentToken.equals("READLN"))
+        {
+            eat("READLN");
+            eat("(");
+            String var = currentToken;
+            eat(var);
+            eat(")");
+            vars.put(var, Integer.parseInt(sc.nextLine()));
         }
         else if (currentToken.equals("BEGIN"))
         {

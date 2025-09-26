@@ -1,9 +1,7 @@
 BEGIN
-x := 2;
-y := x + 1;
-x := x + y;
+READLN(x);
+READLN(y);
 WRITELN(x);
 WRITELN(y);
-WRITELN(x * y * (x + y) / 4);
 END;
 .

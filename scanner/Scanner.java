@@ -17,7 +17,7 @@ public class Scanner
     private char currentChar;
     private boolean eof;
 
-    private static final String CHARS = "()<>:=+-*/%;";
+    private static final String CHARS = "()<>:=+-*/%;,";
 
     /**
      * Scanner constructor for construction of a scanner that
@@ -149,7 +149,7 @@ public class Scanner
     {
         if (!hasNext())
         {
-            throw new ScanErrorException("No more tokens");
+            throw new ScanErrorException("EOF reached");
         }
         StringBuilder token = new StringBuilder(String.valueOf(currentChar));
         if (isIdentifier(currentChar))
