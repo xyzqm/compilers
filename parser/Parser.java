@@ -1,11 +1,11 @@
 package parser;
 
-import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
 
 import scanner.ScanErrorException;
 import scanner.Scanner;
+import scanner.EOFException;
 
 /**
  * Scanner is a simple scanner for Compilers and Interpreters (2014-2015) lab exercise 1
@@ -19,6 +19,7 @@ public class Parser
 {
     Scanner scanner;
     String currentToken = "";
+    boolean eof = false;
     java.util.Scanner sc = new java.util.Scanner(System.in);
 
     // map from variable to integer values
@@ -42,11 +43,33 @@ public class Parser
      */
     void eat(String token) throws ScanErrorException
     {
-        if (!currentToken.equals(token))
+        try
         {
-            throw new RuntimeException("Expected " + token + ", but found " + currentToken);
+            if (!currentToken.equals(token))
+            {
+                throw new RuntimeException("Expected " + token + ", but found " + currentToken);
+            }
+            currentToken = scanner.nextToken();
         }
-        currentToken = scanner.nextToken();
+        catch (ScanErrorException e)
+        {
+            if (e instanceof EOFException)
+            {
+                if (!eof)
+                {
+                    eof = true;
+                    currentToken = "EOF";
+                }
+                else
+                {
+                    throw new ScanErrorException("Unexpected EOF");
+                }
+            }
+            else
+            {
+                throw e;
+            }
+        }
     }
 
     /**
@@ -189,5 +212,6 @@ public class Parser
             vars.put(var, value);
         }
         eat(";");
+        // System.out.println("Statement parsed successfully");
     }
 }

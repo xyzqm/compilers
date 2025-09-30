@@ -149,7 +149,7 @@ public class Scanner
     {
         if (!hasNext())
         {
-            throw new ScanErrorException("EOF reached");
+            throw new EOFException();
         }
         StringBuilder token = new StringBuilder(String.valueOf(currentChar));
         if (isIdentifier(currentChar))

@@ -17,7 +17,7 @@ public class ParserTester
         {
             // read input from file
             Parser parser = new Parser(args[0]);
-            while (true)
+            while (!parser.eof)
             {
                 parser.parseStatement();
             }
