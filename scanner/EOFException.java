@@ -2,6 +2,8 @@ package scanner;
 
 /**
  * EOFException is thrown when the end of the input stream is reached.
+ * @author Daniel Zhu
+ * @version 1.0
  */
 public class EOFException extends ScanErrorException
 {
