@@ -1,11 +1,5 @@
 package ast;
 
-@FunctionalInterface
-interface Fn
-{
-    int eval(int l, int r);
-}
-
 public class BinOp implements Expression
 {
     private Expression left;

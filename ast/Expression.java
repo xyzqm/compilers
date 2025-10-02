@@ -1,6 +1,6 @@
 package ast;
 
-interface Expression
+public interface Expression
 {
     int eval(Environment env) throws RuntimeException;
 }

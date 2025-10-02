@@ -1,9 +1,9 @@
 package ast;
 
-public class Factor implements Expression {
+public class Number implements Expression {
     private String value;
 
-    public Factor(String value) {
+    public Number(String value) {
         this.value = value;
     }
 

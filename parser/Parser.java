@@ -6,6 +6,12 @@ import java.util.Map;
 import scanner.ScanErrorException;
 import scanner.Scanner;
 import scanner.EOFException;
+import ast.BinOp;
+import ast.Expression;
+import ast.Fn;
+import ast.Number;
+import ast.Statement;
+import ast.Writeln;
 
 /**
  * Scanner is a simple scanner for Compilers and Interpreters (2014-2015) lab exercise 1
@@ -21,9 +27,6 @@ public class Parser
     String currentToken = "";
     boolean eof = false;
     java.util.Scanner sc = new java.util.Scanner(System.in);
-
-    // map from variable to integer values
-    Map<String, Integer> vars = new HashMap<>();
 
     /**
      * Constructor for Parser class.
@@ -77,24 +80,11 @@ public class Parser
      * @return The parsed number.
      * @throws ScanErrorException If an error occurs during scanning.
      */
-    private int parseNumber() throws ScanErrorException
+    private Number parseNumber() throws ScanErrorException
     {
-        try
-        {
-            int number = Integer.parseInt(currentToken);
-            eat(currentToken);
-            return number;
-        }
-        catch (NumberFormatException e)
-        {
-            if (vars.containsKey(currentToken))
-            {
-                int value = vars.get(currentToken);
-                eat(currentToken);
-                return value;
-            }
-            throw new ScanErrorException("Expected a factor, but found " + currentToken);
-        }
+        Number n = new Number(currentToken);
+        eat(currentToken);
+        return n;
     }
 
     /**
@@ -102,19 +92,19 @@ public class Parser
      * @return The parsed factor.
      * @throws ScanErrorException If an error occurs during scanning.
      */
-    private int parseFactor() throws ScanErrorException
+    private Expression parseFactor() throws ScanErrorException
     {
         if (currentToken.equals("("))
         {
             eat("(");
-            int n = parseExpression();
+            BinOp bo = parseExpression();
             eat(")");
-            return n;
+            return bo;
         }
         else if (currentToken.equals("-"))
         {
             eat("-");
-            return -parseFactor();
+            return new BinOp(new Number("0"), parseFactor(), (a, b) -> a - b);
         }
         else
         {
@@ -127,24 +117,17 @@ public class Parser
      * @return the result of the expression
      * @throws ScanErrorException If an error occurs during scanning.
      */
-    private int parseTerm() throws ScanErrorException
+    private Expression parseTerm() throws ScanErrorException
     {
-        int n = parseFactor();
+        Expression cur = parseFactor();
         while (currentToken.equals("*") || currentToken.equals("/"))
         {
             String op = currentToken;
             eat(currentToken);
-            int m = parseFactor();
-            if (op.equals("*"))
-            {
-                n *= m;
-            }
-            else
-            {
-                n /= m;
-            }
+            Fn f = (a, b) -> op.equals("*") ? a * b : a / b;
+            cur = new BinOp(cur, parseFactor(), f);
         }
-        return n;
+        return cur;
     }
 
     /**
@@ -152,37 +135,30 @@ public class Parser
      * @return the result of the expression
      * @throws ScanErrorException If an error occurs during scanning.
      */
-    private int parseExpression() throws ScanErrorException
+    private Expression parseExpression() throws ScanErrorException
     {
-        int n = parseTerm();
+        Expression cur = parseTerm();
         while (currentToken.equals("+") || currentToken.equals("-"))
         {
             String op = currentToken;
             eat(currentToken);
-            int m = parseTerm();
-            if (op.equals("+"))
-            {
-                n += m;
-            }
-            else
-            {
-                n -= m;
-            }
+            Fn f = (a, b) -> op.equals("+") ? a + b : a - b;
+            cur = new BinOp(cur, parseTerm(), f);
         }
-        return n;
+        return cur;
     }
 
     /**
      * Parses statements of the form WRITELN(expr) or BEGIN stmts END;
      * @throws ScanErrorException If an error occurs during scanning.
      */
-    public void parseStatement() throws ScanErrorException
+    public Statement parseStatement() throws ScanErrorException
     {
         if (currentToken.equals("WRITELN"))
         {
             eat("WRITELN");
             eat("(");
-            System.out.println(parseExpression());
+            Statement s = new Writeln(parseExpression());
             eat(")");
         }
         else if (currentToken.equals("READLN"))

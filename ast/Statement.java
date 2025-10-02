@@ -1,6 +1,6 @@
 package ast;
 
-interface Statement
+public interface Statement
 {
     public void execute(Environment env) throws RuntimeException;
 }
