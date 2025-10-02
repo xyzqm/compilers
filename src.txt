@@ -2,6 +2,6 @@ BEGIN
 READLN(x);
 y := x + 1;
 x := x + y;
-WRITELN(x * y);
+WRITELN(x * y / 2 + 1);
 END;
 .

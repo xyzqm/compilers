@@ -182,6 +182,5 @@ public class Parser
         }
         eat(";");
         return s;
-        // System.out.println("Statement parsed successfully");
     }
 }
