@@ -10,7 +10,7 @@ public class Writeln implements Statement
     }
 
     @Override
-    public void execute(Environment env) throws RuntimeException
+    public void execute(Environment env) throws RTException
     {
         System.out.println(expr.eval(env));
     }

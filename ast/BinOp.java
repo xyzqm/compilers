@@ -14,7 +14,7 @@ public class BinOp implements Expression
     }
 
     @Override
-    public int eval(Environment env) throws RuntimeException
+    public int eval(Environment env) throws RTException
     {
         int leftValue = left.eval(env);
         int rightValue = right.eval(env);

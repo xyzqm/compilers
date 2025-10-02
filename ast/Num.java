@@ -1,14 +1,14 @@
 package ast;
 
-public class Number implements Expression {
+public class Num implements Expression {
     private String value;
 
-    public Number(String value) {
+    public Num(String value) {
         this.value = value;
     }
 
     @Override
-    public int eval(Environment env) throws RuntimeException {
+    public int eval(Environment env) throws RTException {
         try
         {
             int number = Integer.parseInt(value);
@@ -20,7 +20,7 @@ public class Number implements Expression {
             {
                 return env.get(value);
             }
-            throw new RuntimeException("Expected a factor, but found " + value);
+            throw new RTException("Expected a factor, but found " + value);
         }
     }
 }

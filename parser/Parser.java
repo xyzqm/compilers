@@ -1,17 +1,9 @@
 package parser;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import scanner.ScanErrorException;
 import scanner.Scanner;
 import scanner.EOFException;
-import ast.BinOp;
-import ast.Expression;
-import ast.Fn;
-import ast.Number;
-import ast.Statement;
-import ast.Writeln;
+import ast.*;
 
 /**
  * Scanner is a simple scanner for Compilers and Interpreters (2014-2015) lab exercise 1
@@ -50,7 +42,7 @@ public class Parser
         {
             if (!currentToken.equals(token))
             {
-                throw new RuntimeException("Expected " + token + ", but found " + currentToken);
+                throw new ScanErrorException("Expected " + token + ", but found " + currentToken);
             }
             currentToken = scanner.nextToken();
         }
@@ -80,9 +72,9 @@ public class Parser
      * @return The parsed number.
      * @throws ScanErrorException If an error occurs during scanning.
      */
-    private Number parseNumber() throws ScanErrorException
+    private Num parseNumber() throws ScanErrorException
     {
-        Number n = new Number(currentToken);
+        Num n = new Num(currentToken);
         eat(currentToken);
         return n;
     }
@@ -97,14 +89,14 @@ public class Parser
         if (currentToken.equals("("))
         {
             eat("(");
-            BinOp bo = parseExpression();
+            Expression bo = parseExpression();
             eat(")");
             return bo;
         }
         else if (currentToken.equals("-"))
         {
             eat("-");
-            return new BinOp(new Number("0"), parseFactor(), (a, b) -> a - b);
+            return new BinOp(new Num("0"), parseFactor(), (a, b) -> a - b);
         }
         else
         {
@@ -154,40 +146,42 @@ public class Parser
      */
     public Statement parseStatement() throws ScanErrorException
     {
+        Statement s = null;
         if (currentToken.equals("WRITELN"))
         {
             eat("WRITELN");
             eat("(");
-            Statement s = new Writeln(parseExpression());
+            s = new Writeln(parseExpression());
             eat(")");
         }
         else if (currentToken.equals("READLN"))
         {
             eat("READLN");
             eat("(");
-            String var = currentToken;
-            eat(var);
+            s = new Readln(currentToken);
+            eat(currentToken);
             eat(")");
-            vars.put(var, Integer.parseInt(sc.nextLine()));
         }
         else if (currentToken.equals("BEGIN"))
         {
+            Block b = new Block();
             eat("BEGIN");
             while (!currentToken.equals("END"))
             {
-                parseStatement();
+                b.addStatement(parseStatement());
             }
             eat("END");
+            s = b;
         }
         else // this is an assignment of the form x := expr;
         {
             String var = currentToken;
             eat(var);
             eat(":=");
-            int value = parseExpression();
-            vars.put(var, value);
+            s = new Assign(var, parseExpression());
         }
         eat(";");
+        return s;
         // System.out.println("Statement parsed successfully");
     }
 }
