@@ -3,6 +3,10 @@ package parser;
 import scanner.ScanErrorException;
 import scanner.Scanner;
 import scanner.EOFException;
+
+import java.util.Map;
+import static java.util.Map.entry;
+
 import ast.*;
 
 /**
@@ -19,7 +23,21 @@ public class Parser
     String currentToken = "";
     boolean eof = false;
     java.util.Scanner sc = new java.util.Scanner(System.in);
-
+    final String[] ops = {"*/", "+-", "<><=>=", "and", "or"};
+    final Map<String, Fn> fns = Map.ofEntries(
+            entry("*", (a, b) -> a * b),
+            entry("+", (Fn) (a, b) -> a + b),
+            entry("-", (Fn) (a, b) -> a - b),
+            entry("/", (Fn) (a, b) -> a / b),
+            entry("<", (Fn) (a, b) -> a < b ? 1 : 0),
+            entry(">", (Fn) (a, b) -> a > b ? 1 : 0),
+            entry("<=", (Fn) (a, b) -> a <= b ? 1 : 0),
+            entry(">=", (Fn) (a, b) -> a >= b ? 1 : 0),
+            entry("==", (Fn) (a, b) -> a == b ? 1 : 0),
+            entry("!=", (Fn) (a, b) -> a != b ? 1 : 0),
+            entry("and", (Fn) (a, b) -> a != 0 ? b : a),
+            entry("or", (Fn) (a, b) -> a != 0 ? a : b)
+        );
     /**
      * Constructor for Parser class.
      * @param input The input string to be parsed.
@@ -105,43 +123,39 @@ public class Parser
     }
 
     /**
-     * Parses an expression consisting of negation, *, and /
-     * @return the result of the expression
+     * Parses expressions of a given level.
+     * @return the AST of the expression.
      * @throws ScanErrorException If an error occurs during scanning.
      */
-    private Expression parseTerm() throws ScanErrorException
+    private Expression parseExpression(int level) throws ScanErrorException
     {
-        Expression cur = parseFactor();
-        while (currentToken.equals("*") || currentToken.equals("/"))
+        if (level == -1)
+        {
+            return parseFactor();
+        }
+        Expression cur = parseExpression(level - 1);
+        while (ops[level].contains(currentToken))
         {
             String op = currentToken;
             eat(currentToken);
-            Fn f = (a, b) -> op.equals("*") ? a * b : a / b;
-            cur = new BinOp(cur, parseFactor(), f);
+            cur = new BinOp(cur, parseExpression(level - 1), fns.get(op));
         }
         return cur;
     }
 
     /**
-     * Parses field expressions.
-     * @return the result of the expression
+     * Parses expressions of the highest level.
+     * @return the AST of the expression.
      * @throws ScanErrorException If an error occurs during scanning.
      */
     private Expression parseExpression() throws ScanErrorException
     {
-        Expression cur = parseTerm();
-        while (currentToken.equals("+") || currentToken.equals("-"))
-        {
-            String op = currentToken;
-            eat(currentToken);
-            Fn f = (a, b) -> op.equals("+") ? a + b : a - b;
-            cur = new BinOp(cur, parseTerm(), f);
-        }
-        return cur;
+        return parseExpression(ops.length - 1);
     }
 
     /**
      * Parses statements of the form WRITELN(expr) or BEGIN stmts END;
+     * @return the AST of the statement.
      * @throws ScanErrorException If an error occurs during scanning.
      */
     public Statement parseStatement() throws ScanErrorException

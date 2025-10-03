@@ -2,6 +2,12 @@ BEGIN
 READLN(x);
 y := x + 1;
 x := x + y;
+WRITELN(x);
+WRITELN(y);
 WRITELN(x * y / 2 + 1);
+WRITELN(x or y);
+WRITELN(x < y);
+WRITELN(x - 3 < y);
+WRITELN(x < y or x > y);
 END;
 .
