@@ -23,7 +23,7 @@ public class Parser
     String currentToken = "";
     boolean eof = false;
     java.util.Scanner sc = new java.util.Scanner(System.in);
-    final String[] ops = {"*/", "+-", "<><=>=", "and", "or"};
+    final String[] ops = {"*/", "+-", "<><= >=", "and", "or"};
     final Map<String, Fn> fns = Map.ofEntries(
             entry("*", (a, b) -> a * b),
             entry("+", (Fn) (a, b) -> a + b),
@@ -33,7 +33,8 @@ public class Parser
             entry(">", (Fn) (a, b) -> a > b ? 1 : 0),
             entry("<=", (Fn) (a, b) -> a <= b ? 1 : 0),
             entry(">=", (Fn) (a, b) -> a >= b ? 1 : 0),
-            entry("==", (Fn) (a, b) -> a == b ? 1 : 0),
+            entry("=", (Fn) (a, b) -> a == b ? 1 : 0),
+            entry("<>", (Fn) (a, b) -> a != b ? 1 : 0),
             entry("!=", (Fn) (a, b) -> a != b ? 1 : 0),
             entry("and", (Fn) (a, b) -> a != 0 ? b : a),
             entry("or", (Fn) (a, b) -> a != 0 ? a : b)
