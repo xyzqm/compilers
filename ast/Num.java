@@ -1,14 +1,22 @@
 package ast;
 
-public class Num implements Expression {
+/**
+ * Represents a numeric literal in the AST.
+ * @author Daniel Zhu
+ * @version 1.0
+ */
+public class Num implements Expression
+{
     private String value;
 
-    public Num(String value) {
+    public Num(String value)
+    {
         this.value = value;
     }
 
     @Override
-    public int eval(Environment env) throws RTException {
+    public int eval(Environment env) throws RTException
+    {
         try
         {
             int number = Integer.parseInt(value);

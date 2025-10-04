@@ -20,7 +20,7 @@ public class Readln implements Statement
 
     @Override
 	public void execute(Environment env) throws RTException
-	{
-		env.put(var, Integer.parseInt(System.console().readLine()));
-	}
+    {
+        env.put(var, Integer.parseInt(System.console().readLine()));
+    }
 }

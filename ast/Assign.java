@@ -1,18 +1,29 @@
 package ast;
 
+/**
+ * Represents an assignment statement in the AST.
+ * @author Daniel Zhu
+ * @version 1.0
+ */
 public class Assign implements Statement
 {
     private String id;
     private Expression expr;
 
-    public Assign(String id, Expression expr) {
+    /**
+    * Initializes an assignment statement.
+    * @param id The identifier to assign to.
+    * @param expr The expression to evaluate and assign.
+ */
+    public Assign(String id, Expression expr)
+    {
         this.id = id;
         this.expr = expr;
     }
 
-	@Override
+    @Override
 	public void execute(Environment env) throws RTException
-	{
-	    env.put(id, expr.eval(env));
-	}
+    {
+        env.put(id, expr.eval(env));
+    }
 }
