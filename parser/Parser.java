@@ -154,6 +154,30 @@ public class Parser
         return parseExpression(ops.length - 1);
     }
 
+    private Statement parseIf() throws ScanErrorException
+    {
+        eat("IF");
+        Expression cond = parseExpression();
+        eat("THEN");
+        Statement then = parseStatement();
+        Statement els = null;
+        if (currentToken.equals("ELSE"))
+        {
+            eat("ELSE");
+            els = parseStatement();
+        }
+        return new If(cond, then, els);
+    }
+
+    private Statement parseWhile() throws ScanErrorException
+    {
+        eat("WHILE");
+        Expression cond = parseExpression();
+        eat("DO");
+        Statement body = parseStatement();
+        return new While(cond, body);
+    }
+
     /**
      * Parses statements of the form WRITELN(expr) or BEGIN stmts END;
      * @return the AST of the statement.
@@ -187,6 +211,14 @@ public class Parser
             }
             eat("END");
             s = b;
+        }
+        else if (currentToken.equals("IF"))
+        {
+            return parseIf();
+        }
+        else if (currentToken.equals("WHILE"))
+        {
+            return parseWhile();
         }
         else // this is an assignment of the form x := expr;
         {

@@ -1,15 +1,11 @@
 BEGIN
-READLN(x);
-y := x + 1;
-x := x + y;
-WRITELN(x);
-WRITELN(y);
-WRITELN(x * y / 2 + 1);
-WRITELN(x or y);
-WRITELN(x <= y);
-WRITELN(x - 2 = y);
-WRITELN(x - 2 <> y);
-WRITELN(x - 3 < y);
-WRITELN(x < y or x > y);
+val := 100;
+x := 100;
+WHILE val >= x DO
+BEGIN
+    READLN(x);
+    IF x < val THEN val := x;
+    WRITELN(val);
+END;
 END;
 .

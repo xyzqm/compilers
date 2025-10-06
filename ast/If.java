@@ -7,7 +7,7 @@ public class If implements Statement
     private Statement els;
 
     /**
-    * Constructs an If statement with the given condition, then statement, and else statement.
+    * Constructs an if statement with the given condition, then statement, and else statement.
     * @param cond The condition expression.
     * @param then The statement to execute if the condition is true.
     * @param els The statement to execute if the condition is false.
@@ -26,7 +26,7 @@ public class If implements Statement
         {
             then.execute(env);
 		}
-		else
+		else if (els != null)
 		{
 			els.execute(env);
 		}
