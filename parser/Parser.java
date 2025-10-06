@@ -35,7 +35,6 @@ public class Parser
             entry(">=", (Fn) (a, b) -> a >= b ? 1 : 0),
             entry("=", (Fn) (a, b) -> a == b ? 1 : 0),
             entry("<>", (Fn) (a, b) -> a != b ? 1 : 0),
-            entry("!=", (Fn) (a, b) -> a != b ? 1 : 0),
             entry("and", (Fn) (a, b) -> a != 0 ? b : a),
             entry("or", (Fn) (a, b) -> a != 0 ? a : b)
         );
