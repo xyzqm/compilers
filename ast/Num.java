@@ -9,6 +9,10 @@ public class Num implements Expression
 {
     private String value;
 
+    /**
+     * Constructs a Num object with the given value.
+     * @param value the value of the numeric literal, or the variable name
+     */
     public Num(String value)
     {
         this.value = value;

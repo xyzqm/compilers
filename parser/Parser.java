@@ -154,6 +154,11 @@ public class Parser
         return parseExpression(ops.length - 1);
     }
 
+    /**
+     * Parses if statements.
+     * @return the AST of the statement.
+     * @throws ScanErrorException If an error occurs during scanning.
+     */
     private Statement parseIf() throws ScanErrorException
     {
         eat("IF");
@@ -169,6 +174,11 @@ public class Parser
         return new If(cond, then, els);
     }
 
+    /**
+     * Parses while statements.
+     * @return the AST of the statement.
+     * @throws ScanErrorException If an error occurs during scanning.
+     */
     private Statement parseWhile() throws ScanErrorException
     {
         eat("WHILE");

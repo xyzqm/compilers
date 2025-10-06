@@ -1,5 +1,10 @@
 package ast;
 
+/**
+ * Represents an if-then-else statement in the AST.
+ * @author Daniel Zhu
+ * @version 1.0
+ */
 public class If implements Statement
 {
     private Expression cond;
@@ -25,10 +30,10 @@ public class If implements Statement
         if (cond.eval(env) != 0)
         {
             then.execute(env);
-		}
-		else if (els != null)
-		{
-			els.execute(env);
-		}
-	}
+    	}
+        else if (els != null)
+    	{
+            els.execute(env);
+    	}
+    }
 }
