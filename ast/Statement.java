@@ -12,5 +12,5 @@ public interface Statement
      * @param env The environment in which the statement is executed.
      * @throws RTException If an error occurs during execution.
      */
-    public void execute(Environment env) throws RTException;
+    public void execute(Environment env) throws RTException, ControlException;
 }

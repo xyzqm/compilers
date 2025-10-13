@@ -30,7 +30,7 @@ public class Block implements Statement
     }
 
     @Override
-	public void execute(Environment env) throws RTException
+	public void execute(Environment env) throws RTException, ControlException
     {
         for (Statement statement : statements)
         {

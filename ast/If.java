@@ -25,7 +25,7 @@ public class If implements Statement
     }
 
     @Override
-	public void execute(Environment env) throws RTException
+	public void execute(Environment env) throws RTException, ControlException
     {
         if (cond.eval(env) != 0)
         {

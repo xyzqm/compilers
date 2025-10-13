@@ -173,12 +173,12 @@ public class Parser
         eat("IF");
         Expression cond = parseExpression();
         eat("THEN");
-        Statement then = parseStatement();
+        Statement then = parseStatement(false);
         Statement els = null;
-        if (currentToken.equals("ELSE"))
+        if (isToken("ELSE"))
         {
             eat("ELSE");
-            els = parseStatement();
+            els = parseStatement(false);
         }
         return new If(cond, then, els);
     }
@@ -216,7 +216,7 @@ public class Parser
      * @return the AST of the statement.
      * @throws ScanErrorException If an error occurs during scanning.
      */
-    public Statement parseStatement() throws ScanErrorException
+    public Statement parseStatement(boolean eatSemi) throws ScanErrorException
     {
         Statement s = null;
         if (isToken("WRITELN"))
@@ -247,7 +247,7 @@ public class Parser
         }
         else if (isToken("IF"))
         {
-            return parseIf();
+            s = parseIf();
         }
         else if (isToken("WHILE"))
         {
@@ -257,6 +257,16 @@ public class Parser
         {
             return parseFor();
         }
+        else if (isToken("BREAK"))
+        {
+            eat("BREAK");
+            s = new Control<Break>(new Break());
+        }
+        else if (isToken("CONTINUE"))
+        {
+            eat("CONTINUE");
+            s = new Control<Continue>(new Continue());
+        }
         else // this is an assignment of the form x := expr;
         {
             String var = currentToken;
@@ -264,7 +274,14 @@ public class Parser
             eat(":=");
             s = new Assign(var, parseExpression());
         }
-        eat(";");
+        if (eatSemi)
+        {
+            eat(";");
+        }
         return s;
+    }
+    public Statement parseStatement() throws ScanErrorException
+    {
+        return parseStatement(true);
     }
 }

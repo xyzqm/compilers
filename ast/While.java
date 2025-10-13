@@ -22,7 +22,7 @@ public class While implements Statement
     }
 
     @Override
-    public void execute(Environment env) throws RTException
+    public void execute(Environment env) throws RTException, ControlException
     {
     	while (condition.eval(env) != 0)
     	{

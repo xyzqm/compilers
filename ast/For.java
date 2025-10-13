@@ -15,12 +15,23 @@ public class For implements Statement
     }
 
 	@Override
-	public void execute(Environment env) throws RTException {
+	public void execute(Environment env) throws RTException, ControlException {
 	    int lf = l.eval(env);
 	    int rt = r.eval(env);
 	    for (int i = lf; i <= rt; i++) {
-	        env.put(id, i);
-	        body.execute(env);
+			env.put(id, i);
+			try
+			{
+    			body.execute(env);
+			}
+			catch (Break b)
+			{
+				break;
+			}
+			catch (Continue c)
+			{
+				continue;
+			}
 	    }
 	}
 }
