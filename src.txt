@@ -1,11 +1,12 @@
-BEGIN
+begin
 val := 100;
 x := 100;
-WHILE val >= x DO
-BEGIN
-    READLN(x);
-    IF x < val THEN val := x;
-    WRITELN(val);
-END;
-END;
+for i := 1 to 10 do writeln(i);
+while val >= x do
+begin
+    readln(x);
+    if x < val then val := x;
+    writeln(val);
+end;
+end;
 .

@@ -50,6 +50,16 @@ public class Parser
     }
 
     /**
+     * Checks if the current token matches the expected token.
+     * @param token The expected token.
+     * @return True if the current token matches the expected token, false otherwise.
+     */
+    boolean isToken(String token)
+    {
+        return currentToken.toUpperCase().equals(token.toUpperCase());
+    }
+
+    /**
      * Consumes the current token if it matches the expected token.
      * @param token The expected token.
      * @throws ScanErrorException If an error occurs during scanning.
@@ -58,7 +68,7 @@ public class Parser
     {
         try
         {
-            if (!currentToken.equals(token))
+            if (!isToken(token))
             {
                 throw new ScanErrorException("Expected " + token + ", but found " + currentToken);
             }
@@ -187,6 +197,20 @@ public class Parser
         return new While(cond, body);
     }
 
+    private Statement parseFor() throws ScanErrorException
+    {
+        eat("FOR");
+        String id = currentToken;
+        eat(currentToken);
+        eat(":=");
+        Expression l = parseExpression();
+        eat("TO");
+        Expression r = parseExpression();
+        eat("DO");
+        Statement body = parseStatement();
+        return new For(id, l, r, body);
+    }
+
     /**
      * Parses statements of the form WRITELN(expr) or BEGIN stmts END;
      * @return the AST of the statement.
@@ -195,14 +219,14 @@ public class Parser
     public Statement parseStatement() throws ScanErrorException
     {
         Statement s = null;
-        if (currentToken.equals("WRITELN"))
+        if (isToken("WRITELN"))
         {
             eat("WRITELN");
             eat("(");
             s = new Writeln(parseExpression());
             eat(")");
         }
-        else if (currentToken.equals("READLN"))
+        else if (isToken("READLN"))
         {
             eat("READLN");
             eat("(");
@@ -210,24 +234,28 @@ public class Parser
             eat(currentToken);
             eat(")");
         }
-        else if (currentToken.equals("BEGIN"))
+        else if (isToken("BEGIN"))
         {
             Block b = new Block();
             eat("BEGIN");
-            while (!currentToken.equals("END"))
+            while (!isToken("END"))
             {
                 b.addStatement(parseStatement());
             }
             eat("END");
             s = b;
         }
-        else if (currentToken.equals("IF"))
+        else if (isToken("IF"))
         {
             return parseIf();
         }
-        else if (currentToken.equals("WHILE"))
+        else if (isToken("WHILE"))
         {
             return parseWhile();
+        }
+        else if (isToken("FOR"))
+        {
+            return parseFor();
         }
         else // this is an assignment of the form x := expr;
         {
