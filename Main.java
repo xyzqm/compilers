@@ -21,7 +21,7 @@ public class Main
     {
         // ScannerTester.main(args);
         // read src.txt into a String
-        String src = new String(Files.readAllBytes(Paths.get("src.txt")));
+        String src = new String(Files.readAllBytes(Paths.get("src.pas")));
         ParserTester.main(new String[]{src});
     }
 }
