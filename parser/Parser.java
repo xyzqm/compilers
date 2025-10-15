@@ -197,6 +197,11 @@ public class Parser
         return new While(cond, body);
     }
 
+    /**
+     * Parses for statements.
+     * @return the AST of the statement.
+     * @throws ScanErrorException If an error occurs during scanning.
+     */
     private Statement parseFor() throws ScanErrorException
     {
         eat("FOR");
@@ -213,6 +218,7 @@ public class Parser
 
     /**
      * Parses statements of the form WRITELN(expr) or BEGIN stmts END;
+     * @param eatSemi Whether to eat a semicolon after the statement.
      * @return the AST of the statement.
      * @throws ScanErrorException If an error occurs during scanning.
      */
@@ -280,6 +286,12 @@ public class Parser
         }
         return s;
     }
+
+    /**
+     * Parses a statement with a semicolon.
+     * @return the AST of the statement.
+     * @throws ScanErrorException If an error occurs during scanning.
+     */
     public Statement parseStatement() throws ScanErrorException
     {
         return parseStatement(true);
