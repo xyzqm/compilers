@@ -1,14 +1,18 @@
-begin
-prod := 1;
-for i := 1 to 100 do begin
-    readln(x);
-    if x = 0 then break
-    else if x = 2 then continue
-    else begin
-        prod := prod * x;
-        writeln(prod);
-    end;
-end;
-writeln(prod);
-end;
+// Test File for for and readln
+// @author Ogden, Ian 24iano_students_harker_org
+BEGIN
+    READLN(x);
+    WRITELN(x + x);
+    FOR y := 1 TO 12 DO
+    BEGIN
+        WRITELN(x);
+        x := x + y;
+    END;
+    WRITELN(x);
+    WHILE x > 75 DO
+    BEGIN
+        WRITELN(x);
+        x := x - 2;
+    END;
+END;
 .
