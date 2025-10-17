@@ -1,5 +1,7 @@
 package ast;
 
+import evironment.Environment;
+
 /**
  * Represents a numeric literal in the AST.
  * @author Daniel Zhu

@@ -1,5 +1,7 @@
 package ast;
 
+import evironment.Environment;
+
 /**
  * Represents an expression in the AST.
  * @author Daniel Zhu

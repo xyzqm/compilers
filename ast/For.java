@@ -1,5 +1,7 @@
 package ast;
 
+import evironment.Environment;
+
 /**
  * Represents a for loop statement in the AST.
  * @author Daniel Zhu

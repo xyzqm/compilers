@@ -1,6 +1,6 @@
 package parser;
 
-import ast.Environment;
+import evironment.Environment;
 
 /**
  * This class tests the Parser class.

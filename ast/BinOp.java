@@ -1,5 +1,7 @@
 package ast;
 
+import evironment.Environment;
+
 /**
  * Represents a binary operation expression.
  * @author Daniel Zhu
