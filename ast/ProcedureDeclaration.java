@@ -5,18 +5,38 @@ import environment.Environment;
 
 /**
  * Represents a procedure declaration in the AST.
+ * @author Daniel Zhu
+ * @version 1.0
  */
-public class ProcedureDeclaration {
+public class ProcedureDeclaration
+{
+    /**
+     * The name of the procedure.
+     */
     public String name;
     private List<String> parameters;
     private Statement body;
 
-    public ProcedureDeclaration(String name, List<String> parameters, Statement body) {
+    /**
+     * Constructs a ProcedureDeclaration.
+     * @param name The name of the procedure.
+     * @param parameters The parameters of the procedure.
+     * @param body The body statement of the procedure.
+     */
+    public ProcedureDeclaration(String name, List<String> parameters, Statement body)
+    {
         this.name = name;
         this.parameters = parameters;
         this.body = body;
     }
 
+    /**
+     * Evaluates the procedure with the given arguments.
+     * @param env The environment in which to evaluate.
+     * @param arguments The arguments to pass to the procedure.
+     * @return The result of the procedure.
+     * @throws RTException If an error occurs during evaluation.
+     */
     public int eval(Environment env, List<Expression> arguments) throws RTException
     {
         if (parameters.size() != arguments.size())
@@ -29,7 +49,8 @@ public class ProcedureDeclaration {
         {
             procEnv.put(parameters.get(i), arguments.get(i).eval(env));
         }
-        try {
+        try
+        {
             body.execute(procEnv);
         }
         catch (ControlException e)

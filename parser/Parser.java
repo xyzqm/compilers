@@ -98,7 +98,13 @@ public class Parser
         }
     }
 
-    private List<Expression> parseArgs() throws ScanErrorException {
+    /**
+     * Parses arguments for a procedure call.
+     * @return the list of parsed argument expressions.
+     * @throws ScanErrorException If an error occurs during scanning.
+     */
+    private List<Expression> parseArgs() throws ScanErrorException
+    {
         List<Expression> args = new ArrayList<>();
         eat("(");
         while (!isToken(")"))
@@ -248,6 +254,12 @@ public class Parser
      * @return the AST of the statement.
      * @throws ScanErrorException If an error occurs during scanning.
      */
+    /**
+     * Parses statements of the form WRITELN(expr) or BEGIN stmts END;
+     * @param eatSemi Whether to eat a semicolon after the statement.
+     * @return the AST of the statement.
+     * @throws ScanErrorException If an error occurs during scanning.
+     */
     public Statement parseStatement(boolean eatSemi) throws ScanErrorException
     {
         Statement s = null;
@@ -307,7 +319,8 @@ public class Parser
             {
                 s = new ProcedureCall(var, parseArgs());
             }
-            else {
+            else
+            {
                 eat(":=");
                 s = new Assign(var, parseExpression());
             }
@@ -329,6 +342,11 @@ public class Parser
         return parseStatement(true);
     }
 
+    /**
+     * Parses a procedure declaration.
+     * @return the ProcedureDeclaration object.
+     * @throws ScanErrorException If an error occurs during scanning.
+     */
     private ProcedureDeclaration parseProcedureDeclaration() throws ScanErrorException
     {
         eat("PROCEDURE");
@@ -351,6 +369,11 @@ public class Parser
         return new ProcedureDeclaration(name, params, parseStatement());
     }
 
+    /**
+     * Parses the entire program.
+     * @return the Program object.
+     * @throws ScanErrorException If an error occurs during scanning.
+     */
     public Program parseProgram() throws ScanErrorException
     {
         Program p = new Program();

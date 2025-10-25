@@ -2,16 +2,35 @@ package ast;
 
 import environment.Environment;
 
-public class Program extends Environment {
+/**
+ * Represents the main program in the AST.
+ * @author Daniel Zhu
+ * @version 1.0
+ */
+public class Program extends Environment
+{
+    /**
+     * The body statement of the program.
+     */
     private Statement body;
 
-    public void setBody(Statement body) {
+    /**
+     * Sets the body statement of the program.
+     * @param body The body statement.
+     */
+    public void setBody(Statement body)
+    {
         this.body = body;
     }
 
-	public void execute() throws RTException, ControlException
-	{
-	    Environment mainEnv = new Environment(this);
-	    body.execute(mainEnv);
-	}
+    /**
+     * Executes the program.
+     * @throws RTException If an error occurs during execution.
+     * @throws ControlException If a control flow exception occurs.
+     */
+    public void execute() throws RTException, ControlException
+    {
+        Environment mainEnv = new Environment(this);
+        body.execute(mainEnv);
+    }
 }
