@@ -3,7 +3,7 @@ package ast;
 import java.util.ArrayList;
 import java.util.List;
 
-import evironment.Environment;
+import environment.Environment;
 
 /**
  * Represents a block of statements.

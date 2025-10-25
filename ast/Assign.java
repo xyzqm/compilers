@@ -1,6 +1,6 @@
 package ast;
 
-import evironment.Environment;
+import environment.Environment;
 
 /**
  * Represents an assignment statement in the AST.
