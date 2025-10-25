@@ -1,18 +1,7 @@
-// Test File for for and readln
-// @author Ogden, Ian 24iano_students_harker_org
+PROCEDURE print(n);
+WRITELN(n);
 BEGIN
-    READLN(x);
-    WRITELN(x + x);
-    FOR y := 1 TO 12 DO
-    BEGIN
-        WRITELN(x);
-        x := x + y;
-    END;
-    WRITELN(x);
-    WHILE x > 75 DO
-    BEGIN
-        WRITELN(x);
-        x := x - 2;
-    END;
+n := 3;
+ignore := print(5);
+WRITELN(n);
 END;
-.

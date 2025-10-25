@@ -7,7 +7,7 @@ import environment.Environment;
  * Represents a procedure declaration in the AST.
  */
 public class ProcedureDeclaration {
-    private String name;
+    public String name;
     private List<String> parameters;
     private Statement body;
 
@@ -24,6 +24,7 @@ public class ProcedureDeclaration {
             throw new RTException("Wrong number of arguments for procedure " + name);
         }
         Environment procEnv = new Environment(env);
+        procEnv.put(name, 0); // dummy return value
         for (int i = 0; i < parameters.size(); i++)
         {
             procEnv.put(parameters.get(i), arguments.get(i).eval(env));

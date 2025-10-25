@@ -1,6 +1,6 @@
 package parser;
 
-import environment.Environment;
+import ast.Program;
 
 /**
  * This class tests the Parser class.
@@ -18,10 +18,12 @@ public class ParserTester
         try
         {
             // read input from file
-            Environment env = new Environment();
+            // Environment env = new Environment();
             Parser parser = new Parser(args[0]);
-            parser.parseStatement().execute(env);
-            assert(parser.eof);
+            Program p = parser.parseProgram();
+            p.execute();
+            // parser.parseStatement().execute(env);
+            // assert(parser.eof);
         }
         catch (Exception e)
         {

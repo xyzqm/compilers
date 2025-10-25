@@ -12,6 +12,8 @@ public class Environment extends HashMap<String, Integer>
 {
     Environment parent;
 
+    private HashMap<String, ProcedureDeclaration> procs = new HashMap<>();
+
     public Environment(Environment parent)
     {
         this.parent = parent;
@@ -33,9 +35,8 @@ public class Environment extends HashMap<String, Integer>
         return val;
     }
 
-    private HashMap<String, ProcedureDeclaration> procs;
 
-    public void addProcedure(String name, ProcedureDeclaration proc)
+    public void setProcedure(String name, ProcedureDeclaration proc)
     {
         assert(parent == null);
         procs.put(name, proc);

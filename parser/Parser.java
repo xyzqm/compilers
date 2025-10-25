@@ -7,6 +7,9 @@ import scanner.EOFException;
 import java.util.Map;
 import static java.util.Map.entry;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import ast.*;
 
 /**
@@ -100,11 +103,30 @@ public class Parser
      * @return The parsed number.
      * @throws ScanErrorException If an error occurs during scanning.
      */
-    private Num parseNumber() throws ScanErrorException
+    private Expression parseNumber() throws ScanErrorException
     {
-        Num n = new Num(currentToken);
+        String cur = currentToken;
         eat(currentToken);
-        return n;
+        if (isToken("("))
+        {
+            List<Expression> args = new ArrayList<>();
+            eat("(");
+            while (!isToken(")"))
+            {
+                args.add(parseExpression());
+                if (!isToken(","))
+                {
+                    break;
+                }
+                eat(",");
+            }
+            eat(")");
+            return new ProcedureCall(cur, args);
+        }
+        else
+        {
+            return new Num(cur);
+        }
     }
 
     /**
@@ -295,5 +317,39 @@ public class Parser
     public Statement parseStatement() throws ScanErrorException
     {
         return parseStatement(true);
+    }
+
+    private ProcedureDeclaration parseProcedureDeclaration() throws ScanErrorException
+    {
+        eat("PROCEDURE");
+        String name = currentToken;
+        eat(name);
+        eat("(");
+        List<String> params = new ArrayList<>();
+        while (!isToken(")"))
+        {
+            String param = currentToken;
+            params.add(param);
+            eat(param);
+            if (!isToken(")"))
+            {
+                eat(",");
+            }
+        }
+        eat(")");
+        eat(";");
+        return new ProcedureDeclaration(name, params, parseStatement());
+    }
+
+    public Program parseProgram() throws ScanErrorException
+    {
+        Program p = new Program();
+        while (isToken("PROCEDURE"))
+        {
+            ProcedureDeclaration proc = parseProcedureDeclaration();
+            p.setProcedure(proc.name, proc);
+        }
+        p.setBody(parseStatement());
+        return p;
     }
 }
