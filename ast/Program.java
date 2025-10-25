@@ -11,6 +11,7 @@ public class Program extends Environment {
 
 	public void execute() throws RTException, ControlException
 	{
-	    body.execute(this);
+	    Environment mainEnv = new Environment(this);
+	    body.execute(mainEnv);
 	}
 }

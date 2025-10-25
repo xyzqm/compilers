@@ -23,16 +23,11 @@ public class ProcedureCall implements Expression, Statement
 		{
     		throw new RTException("Procedure not found: " + name);
 		}
-		return proc.eval(env, arguments);
+		return proc.eval(env.getParent(), arguments);
 	}
 
 	@Override
 	public void execute(Environment env) throws RTException, ControlException {
-    	ProcedureDeclaration proc = env.getProcedure(name);
-    	if (proc == null)
-    	{
-      		throw new RTException("Procedure not found: " + name);
-    	}
-    	proc.eval(env, arguments);
+	    eval(env);
 	}
 }

@@ -20,7 +20,7 @@ public class Main
     {
         // ScannerTester.main(args);
         // read src.txt into a String
-        String src = new String(Files.readAllBytes(Paths.get("src3.pas")));
+        String src = new String(Files.readAllBytes(Paths.get("src4.pas")));
         ParserTester.main(new String[]{src});
     }
 }

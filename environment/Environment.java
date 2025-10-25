@@ -24,6 +24,11 @@ public class Environment extends HashMap<String, Integer>
         this.parent = null;
     }
 
+    public Environment getParent()
+    {
+        return parent;
+    }
+
     @Override
     public Integer get(Object key)
     {
