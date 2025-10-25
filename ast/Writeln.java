@@ -1,6 +1,6 @@
 package ast;
 
-import evironment.Environment;
+import environment.Environment;
 
 /**
  * Represents a writeln statement in the AST.
