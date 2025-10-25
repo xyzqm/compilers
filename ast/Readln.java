@@ -1,6 +1,6 @@
 package ast;
 
-import evironment.Environment;
+import environment.Environment;
 
 /**
  * Represents a statement for reading a line from the console.
