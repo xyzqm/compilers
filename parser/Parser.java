@@ -98,6 +98,22 @@ public class Parser
         }
     }
 
+    private List<Expression> parseArgs() throws ScanErrorException {
+        List<Expression> args = new ArrayList<>();
+        eat("(");
+        while (!isToken(")"))
+        {
+            args.add(parseExpression());
+            if (!isToken(","))
+            {
+                break;
+            }
+            eat(",");
+        }
+        eat(")");
+        return args;
+    }
+
     /**
      * Parses a number token.
      * @return The parsed number.
@@ -109,19 +125,7 @@ public class Parser
         eat(currentToken);
         if (isToken("("))
         {
-            List<Expression> args = new ArrayList<>();
-            eat("(");
-            while (!isToken(")"))
-            {
-                args.add(parseExpression());
-                if (!isToken(","))
-                {
-                    break;
-                }
-                eat(",");
-            }
-            eat(")");
-            return new ProcedureCall(cur, args);
+            return new ProcedureCall(cur, parseArgs());
         }
         else
         {
@@ -295,10 +299,14 @@ public class Parser
             eat("CONTINUE");
             s = new Control<Continue>(new Continue());
         }
-        else // this is an assignment of the form x := expr;
+        else // this is either an assignment or a function call
         {
             String var = currentToken;
             eat(var);
+            if (isToken("("))
+            {
+                return new ProcedureCall(var, parseArgs());
+            }
             eat(":=");
             s = new Assign(var, parseExpression());
         }

@@ -1,7 +1,7 @@
-PROCEDURE print(n);
-WRITELN(n);
+PROCEDURE max(x, y);
 BEGIN
-n := 3;
-ignore := print(5);
-WRITELN(n);
+max := x;
+IF y > x THEN max := y;
+WRITELN(max);
 END;
+max(3, 5);
