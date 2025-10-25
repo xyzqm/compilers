@@ -1,21 +1,29 @@
-PROCEDURE max(x, y);
+PROCEDURE Add(y,w,z);
 BEGIN
-    max := x;
-    IF y > x THEN max := y;
-    z := x + y;
-    WRITELN(max);
-    WRITELN(z);
-END;
-PROCEDURE min(x, y);
-BEGIN
-    min := x;
-    IF y < x THEN min := y;
-    z := x + y;
-    WRITELN(min);
-    WRITELN(z);
+	WRITELN(y);
+	WRITELN(w);
+	WRITELN(z);
+	x := x + y;
 END;
 
 BEGIN
-    max(3, 5);
-    WRITELN(min(3, 5));
+	x := 2;
+	y := x + 1;
+	x := x + y;
+	WRITELN(x * y);
+	IF x > y THEN
+	BEGIN
+		WRITELN(x);
+		WRITELN(y);
+	END;
+	x := 0;
+	WHILE x < 10 DO
+	BEGIN
+		WRITELN(x);
+		x := x + 1;
+	END;
+	WRITELN(y);
+	ignore := Add(4,x,y);
+	WRITELN(x);
+
 END;

@@ -34,7 +34,7 @@ public class Num implements Expression
             {
                 return env.get(value);
             }
-            throw new RTException("Expected a factor, but found " + value);
+            throw new RTException(value + " is not defined");
         }
     }
 }

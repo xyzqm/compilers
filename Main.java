@@ -3,7 +3,6 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 import parser.ParserTester;
-import scanner.ScannerTester;
 
 /**
 * @author Daniel Zhu
@@ -21,7 +20,7 @@ public class Main
     {
         // ScannerTester.main(args);
         // read src.txt into a String
-        String src = new String(Files.readAllBytes(Paths.get("src.pas")));
+        String src = new String(Files.readAllBytes(Paths.get("src3.pas")));
         ParserTester.main(new String[]{src});
     }
 }

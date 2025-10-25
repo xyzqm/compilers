@@ -35,6 +35,16 @@ public class Environment extends HashMap<String, Integer>
         return val;
     }
 
+    @Override
+    public boolean containsKey(Object key)
+    {
+        boolean contains = super.containsKey(key);
+        if (!contains && parent != null)
+        {
+            return parent.containsKey(key);
+        }
+        return contains;
+    }
 
     public void setProcedure(String name, ProcedureDeclaration proc)
     {
