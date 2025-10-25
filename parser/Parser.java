@@ -305,10 +305,12 @@ public class Parser
             eat(var);
             if (isToken("("))
             {
-                return new ProcedureCall(var, parseArgs());
+                s = new ProcedureCall(var, parseArgs());
             }
-            eat(":=");
-            s = new Assign(var, parseExpression());
+            else {
+                eat(":=");
+                s = new Assign(var, parseExpression());
+            }
         }
         if (eatSemi)
         {
