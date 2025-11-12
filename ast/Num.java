@@ -49,7 +49,7 @@ public class Num implements Expression
         }
         catch (NumberFormatException nfe)
         {
-            throw new UnsupportedOperationException("Variables not implemented yet");
+            e.getVar(value);
         }
     }
 }

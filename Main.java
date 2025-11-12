@@ -30,10 +30,9 @@ public class Main
     {
         // ScannerTester.main(args);
         // read src.txt into a String
-        byte[] srcBytes = Files.readAllBytes(
-            Paths.get("src.pas")
-        );
-        String src = new String(srcBytes);
+        String src = new String(Files.readAllBytes(
+                Paths.get("src.pas")
+        ));
         Parser parser = new Parser(src);
         Program p = parser.parseProgram();
         p.compile("out.asm");

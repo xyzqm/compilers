@@ -4,7 +4,7 @@ import java.util.HashMap;
 import ast.ProcedureDeclaration;
 
 /**
- * Represents an environment for storing and retrieving variables.
+ * Represents an environment for storing and retrieving variables/functions.
  * @author Daniel Zhu
  * @version 1.0
  */
@@ -41,36 +41,36 @@ public class Environment extends HashMap<String, Integer>
     }
 
     /**
-     * Gets the value for the given key, searching parent environments if necessary.
+     * Gets the value (interpreter)/address (compiler) for the given key, searching parent environments if necessary.
      * @param key The key to look up.
-     * @return The value associated with the key, or null if not found.
+     * @return The value/address associated with the key, or null if not found.
      */
-    @Override
-    public Integer get(Object key)
-    {
-        Integer val = super.get(key);
-        if (val == null && parent != null)
-        {
-            return parent.get(key);
-        }
-        return val;
-    }
+    // @Override
+    // public Integer get(Object key)
+    // {
+    //     Integer val = super.get(key);
+    //     if (val == null && parent != null)
+    //     {
+    //         return parent.get(key);
+    //     }
+    //     return val;
+    // }
 
-    /**
-     * Checks if the environment contains the given key, searching parent environments if necessary.
-     * @param key The key to check.
-     * @return True if the key exists, false otherwise.
-     */
-    @Override
-    public boolean containsKey(Object key)
-    {
-        boolean contains = super.containsKey(key);
-        if (!contains && parent != null)
-        {
-            return parent.containsKey(key);
-        }
-        return contains;
-    }
+    // /**
+    //  * Checks if the environment contains the given key, searching parent environments if necessary.
+    //  * @param key The key to check.
+    //  * @return True if the key exists, false otherwise.
+    //  */
+    // @Override
+    // public boolean containsKey(Object key)
+    // {
+    //     boolean contains = super.containsKey(key);
+    //     if (!contains && parent != null)
+    //     {
+    //         return parent.containsKey(key);
+    //     }
+    //     return contains;
+    // }
 
     /**
      * Sets a procedure in the environment.

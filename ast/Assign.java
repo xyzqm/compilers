@@ -33,7 +33,7 @@ public class Assign implements Statement
     @Override
     public void compile(Emitter e)
     {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'compile'");
+        expr.compile(e);
+        e.writeVar(id);
     }
 }
