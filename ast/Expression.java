@@ -1,5 +1,6 @@
 package ast;
 
+import emitter.Emitter;
 import environment.Environment;
 
 /**
@@ -16,4 +17,5 @@ public interface Expression
     * @throws RTException If an error occurs during evaluation.
  */
     int eval(Environment env) throws RTException;
+    void compile(Emitter e);
 }

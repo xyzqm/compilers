@@ -1,5 +1,6 @@
 package ast;
 
+import emitter.Emitter;
 import environment.Environment;
 
 /**
@@ -32,5 +33,13 @@ public class Program extends Environment
     {
         Environment mainEnv = new Environment(this);
         body.execute(mainEnv);
+    }
+
+    public void compile(String filename)
+    {
+        Emitter e = new Emitter(filename);
+        e.emit("main:");
+        body.compile(e);
+        e.close();
     }
 }

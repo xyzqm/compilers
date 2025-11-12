@@ -27,19 +27,19 @@ public class Parser
     boolean eof = false;
     java.util.Scanner sc = new java.util.Scanner(System.in);
     final String[] ops = {"*/", "+-", "<><= >=", "and", "or"};
-    final Map<String, Fn> fns = Map.ofEntries(
-            entry("*", (a, b) -> a * b),
-            entry("+", (Fn) (a, b) -> a + b),
-            entry("-", (Fn) (a, b) -> a - b),
-            entry("/", (Fn) (a, b) -> a / b),
-            entry("<", (Fn) (a, b) -> a < b ? 1 : 0),
-            entry(">", (Fn) (a, b) -> a > b ? 1 : 0),
-            entry("<=", (Fn) (a, b) -> a <= b ? 1 : 0),
-            entry(">=", (Fn) (a, b) -> a >= b ? 1 : 0),
-            entry("=", (Fn) (a, b) -> a == b ? 1 : 0),
-            entry("<>", (Fn) (a, b) -> a != b ? 1 : 0),
-            entry("and", (Fn) (a, b) -> a != 0 ? b : a),
-            entry("or", (Fn) (a, b) -> a != 0 ? a : b)
+    final Map<String, Op> fns = Map.ofEntries(
+            entry("*", Op.MUL),
+            entry("+", Op.ADD),
+            entry("-", Op.SUB),
+            entry("/", Op.DIV),
+            entry("<", Op.LT),
+            entry(">", Op.GT),
+            entry("<=", Op.LE),
+            entry(">=", Op.GE),
+            entry("=", Op.EQ),
+            entry("<>", Op.NE),
+            entry("and", Op.AND),
+            entry("or", Op.OR)
         );
     /**
      * Constructor for Parser class.
@@ -156,7 +156,7 @@ public class Parser
         else if (currentToken.equals("-"))
         {
             eat("-");
-            return new BinOp(new Num("0"), parseFactor(), (a, b) -> a - b);
+            return new BinOp(new Num("0"), parseFactor(), Op.SUB);
         }
         else
         {

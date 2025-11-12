@@ -39,11 +39,12 @@ public class ProcedureDeclaration
      */
     public int eval(Environment env, List<Expression> arguments) throws RTException
     {
+        // System.out.println(env);
         if (parameters.size() != arguments.size())
         {
             throw new RTException("Wrong number of arguments for procedure " + name);
         }
-        Environment procEnv = new Environment(env);
+        Environment procEnv = new Environment(env.getParent());
         procEnv.put(name, 0); // dummy return value
         for (int i = 0; i < parameters.size(); i++)
         {

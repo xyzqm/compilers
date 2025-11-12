@@ -1,5 +1,6 @@
 package ast;
 
+import emitter.Emitter;
 import environment.Environment;
 
 /**
@@ -26,4 +27,10 @@ public class Control<T extends ControlException> implements Statement
     {
         throw e;
     }
+
+	@Override
+	public void compile(Emitter e) {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Unimplemented method 'compile'");
+	}
 }

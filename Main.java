@@ -2,7 +2,9 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-import parser.ParserTester;
+import ast.*;
+import parser.Parser;
+import scanner.ScanErrorException;
 
 /**
 * @author Daniel Zhu
@@ -16,11 +18,19 @@ public class Main
      * @param args Command-line arguments.
      * @throws IOException If an I/O error occurs.
      */
-    public static void main(String[] args) throws IOException
+    public static void main(String[] args) throws IOException, ScanErrorException, ControlException, RTException
     {
         // ScannerTester.main(args);
         // read src.txt into a String
-        String src = new String(Files.readAllBytes(Paths.get("src4.pas")));
-        ParserTester.main(new String[]{src});
+        String src = new String(Files.readAllBytes(Paths.get("src.pas")));
+        Parser parser = new Parser(src);
+        Program p = parser.parseProgram();
+        p.compile("out.asm");
+        // p.execute();
+        // p.compile("out.asm");
+        // Statement st = new Writeln(new Num("5"));
+        // var st = new BinOp(new Num("5"), new BinOp(new Num("6"), new Num("2"), Op.ADD), Op.MUL);
+        // Emitter e = new Emitter("out.asm");
+        // st.compile(e);
     }
 }

@@ -1,5 +1,6 @@
 package ast;
 
+import emitter.Emitter;
 import environment.Environment;
 
 /**
@@ -50,4 +51,11 @@ public class For implements Statement
             }
         }
     }
+
+	@Override
+	public void compile(Emitter e)
+	{
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Unimplemented method 'compile'");
+	}
 }

@@ -1,5 +1,6 @@
 package ast;
 
+import emitter.Emitter;
 import environment.Environment;
 
 /**
@@ -38,4 +39,10 @@ public class If implements Statement
             els.execute(env);
     	}
     }
+
+	@Override
+	public void compile(Emitter e) {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Unimplemented method 'compile'");
+	}
 }

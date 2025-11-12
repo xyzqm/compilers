@@ -1,5 +1,6 @@
 package ast;
 
+import emitter.Emitter;
 import environment.Environment;
 
 /**
@@ -37,4 +38,19 @@ public class Num implements Expression
             throw new RTException(value + " is not defined");
         }
     }
+
+	@Override
+	public void compile(Emitter e)
+	{
+        try
+        {
+            int number = Integer.parseInt(value);
+            e.emit("li $v0 " + number);
+        }
+        catch (NumberFormatException nfe)
+        {
+      		throw new UnsupportedOperationException("Variables not implemented yet");
+        }
+
+	}
 }

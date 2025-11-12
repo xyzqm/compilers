@@ -2,6 +2,7 @@ package ast;
 
 import java.util.List;
 
+import emitter.Emitter;
 import environment.Environment;
 
 /**
@@ -46,7 +47,7 @@ public class ProcedureCall implements Expression, Statement
         {
             throw new RTException("Procedure not found: " + name);
         }
-        return proc.eval(env.getParent(), arguments);
+        return proc.eval(env, arguments);
     }
 
     /**
@@ -60,4 +61,10 @@ public class ProcedureCall implements Expression, Statement
     {
         eval(env);
     }
+
+	@Override
+	public void compile(Emitter e) {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Unimplemented method 'compile'");
+	}
 }

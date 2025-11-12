@@ -3,6 +3,7 @@ package ast;
 import java.util.ArrayList;
 import java.util.List;
 
+import emitter.Emitter;
 import environment.Environment;
 
 /**
@@ -39,4 +40,13 @@ public class Block implements Statement
             statement.execute(env);
         }
     }
+
+	@Override
+	public void compile(Emitter e)
+	{
+        for (Statement statement : statements)
+        {
+            statement.compile(e);
+        }
+	}
 }
