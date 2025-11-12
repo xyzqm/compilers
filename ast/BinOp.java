@@ -30,9 +30,9 @@ public class BinOp implements Expression
     @Override
     public int eval(Environment env) throws RTException
     {
-        int leftValue = left.eval(env);
-        int rightValue = right.eval(env);
-        return op.eval(leftValue, rightValue);
+        int lf = left.eval(env);
+        int rt = right.eval(env);
+        return op.eval(lf, rt);
     }
 
     @Override

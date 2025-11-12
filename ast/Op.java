@@ -32,7 +32,7 @@ public enum Op
     /**
      * Greater than operation.
      */
-    GT((a, b) -> a > b ? 1 : 0, "FIX"),
+    GT((a, b) -> a > b ? 1 : 0, "bgt"),
     /**
      * Less than or equal operation.
      */
@@ -98,7 +98,14 @@ public enum Op
      */
     public void compile(Emitter e, String a, String b, String c)
     {
-        e.emit(String.format("%s %s %s %s", cmd, a, b, c));
+        if (cmd.startsWith("b"))
+        {
+            e.emit(String.format("eval_comp(%s, %s, %s, %s)", cmd, a, b, c));
+        }
+        else
+        {
+            e.emit(String.format("%s %s %s %s", cmd, a, b, c));
+        }
     }
 
     /**

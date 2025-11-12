@@ -31,6 +31,16 @@ public class Emitter extends Environment
         {
             throw new RuntimeException(e);
         }
+        // macro for evaluating comparisons (>, <, =, etc)
+       	emit(".macro eval_comp(%branch, %res, %lf, %rt)");
+        emit("%branch %lf, %rt, true");
+        emit("li %res, 0");
+        emit("j end");
+        emit("true:");
+        emit("li %res, 1");
+        emit("end:");
+        emit(".end_macro");
+        emit("");
     }
 
     /**
@@ -39,7 +49,7 @@ public class Emitter extends Environment
      */
     public void emit(String code)
     {
-        if (!code.endsWith(":"))
+        if (!code.endsWith(":") && !code.startsWith("."))
         {
             code = "\t" + code;
         }

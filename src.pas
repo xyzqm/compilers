@@ -1,7 +1,8 @@
 BEGIN
-x := 5;
-WRITELN(x);
-y := 1;
-x := x + 2 * y;
-WRITELN(x);
+x := 3;
+y := 2 * x;
+WRITELN(x + y);
+z := x > y;
+WRITELN(z);
+WRITELN(x + y > y);
 END;
