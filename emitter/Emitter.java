@@ -76,7 +76,7 @@ public class Emitter extends Environment
 
     public String address(String name)
     {
-        return (get(name) - stackHeight) + "($sp)";
+        return (stackHeight - get(name)) + "($sp)";
     }
 
     public void getVar(String name)
