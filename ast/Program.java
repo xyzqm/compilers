@@ -35,6 +35,10 @@ public class Program extends Environment
         body.execute(mainEnv);
     }
 
+    /**
+     * Compiles the program to the specified file.
+     * @param filename The name of the output file.
+     */
     public void compile(String filename)
     {
         Emitter e = new Emitter(filename);

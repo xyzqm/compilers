@@ -35,12 +35,13 @@ public class BinOp implements Expression
         return op.eval(leftValue, rightValue);
     }
 
-	@Override
-	public void compile(Emitter e) {
-	    left.compile(e);
-		e.emitPush("$v0");
-		right.compile(e);
-		e.emitPop("$t0");
-		op.compile(e, "$v0", "$t0", "$v0");
-	}
+    @Override
+    public void compile(Emitter e)
+    {
+        left.compile(e);
+        e.emitPush("$v0");
+        right.compile(e);
+        e.emitPop("$t0");
+        op.compile(e, "$v0", "$t0", "$v0");
+    }
 }

@@ -11,26 +11,30 @@ import environment.Environment;
  */
 public class Control<T extends ControlException> implements Statement
 {
-    T e;
+    /**
+     * The control exception to throw when executed.
+     */
+    private T exception;
 
     /**
      * Creates a new Control statement with the given exception.
-     * @param e The control exception to throw when executed.
+     * @param exception The control exception to throw when executed.
      */
-    public Control(T e)
+    public Control(T exception)
     {
-        this.e = e;
+        this.exception = exception;
     }
 
     @Override
     public void execute(Environment env) throws RTException, ControlException
     {
-        throw e;
+        throw exception;
     }
 
-	@Override
-	public void compile(Emitter e) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'compile'");
-	}
+    @Override
+    public void compile(Emitter e)
+    {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'compile'");
+    }
 }

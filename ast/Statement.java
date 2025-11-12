@@ -17,5 +17,10 @@ public interface Statement
      * @throws ControlException If a control flow exception occurs.
      */
     public void execute(Environment env) throws RTException, ControlException;
+
+    /**
+     * Compiles the statement using the given emitter.
+     * @param e The emitter to use for code generation.
+     */
     void compile(Emitter e);
 }

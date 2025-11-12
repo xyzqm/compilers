@@ -28,9 +28,10 @@ public class Writeln implements Statement
         System.out.println(expr.eval(env));
     }
 
-	@Override
-	public void compile(Emitter e) {
-    	expr.compile(e);
+    @Override
+    public void compile(Emitter e)
+    {
+        expr.compile(e);
         e.emit("move $a0 $v0");
         e.emit("li $v0 1");
         e.emit("syscall");
@@ -38,5 +39,5 @@ public class Writeln implements Statement
         e.emit("li $v0 11");
         e.emit("li $a0 10");
         e.emit("syscall");
-	}
+    }
 }

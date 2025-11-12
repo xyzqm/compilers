@@ -41,12 +41,12 @@ public class Block implements Statement
         }
     }
 
-	@Override
-	public void compile(Emitter e)
-	{
+    @Override
+    public void compile(Emitter e)
+    {
         for (Statement statement : statements)
         {
             statement.compile(e);
         }
-	}
+    }
 }

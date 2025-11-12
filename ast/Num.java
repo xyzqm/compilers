@@ -39,9 +39,9 @@ public class Num implements Expression
         }
     }
 
-	@Override
-	public void compile(Emitter e)
-	{
+    @Override
+    public void compile(Emitter e)
+    {
         try
         {
             int number = Integer.parseInt(value);
@@ -49,8 +49,7 @@ public class Num implements Expression
         }
         catch (NumberFormatException nfe)
         {
-      		throw new UnsupportedOperationException("Variables not implemented yet");
+            throw new UnsupportedOperationException("Variables not implemented yet");
         }
-
-	}
+    }
 }

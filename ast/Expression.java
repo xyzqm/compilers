@@ -17,5 +17,10 @@ public interface Expression
     * @throws RTException If an error occurs during evaluation.
  */
     int eval(Environment env) throws RTException;
+
+    /**
+     * Compiles the expression using the given emitter.
+     * @param e The emitter to use for code generation.
+     */
     void compile(Emitter e);
 }
