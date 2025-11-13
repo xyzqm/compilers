@@ -44,5 +44,4 @@ public class While implements Statement
         e.emit("j " + loop);
         e.emit(end + ":");
     }
-
 }
