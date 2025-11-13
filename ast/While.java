@@ -36,12 +36,15 @@ public class While implements Statement
     @Override
     public void compile(Emitter e)
     {
-        String loop = e.nextLabel(), end = e.nextLabel();
+        String loop = e.nextLabel();
+        e.continueLabels.push(e.nextLabel());
+        e.breakLabels.push(e.nextLabel());
         e.emit(loop + ":");
         condition.compile(e);
-        e.emit("beq $v0, $zero, " + end);
+        e.emit("beq $v0, $zero, " + e.breakLabels.peek());
         body.compile(e);
+        e.emit(e.continueLabels.pop() + ":");
         e.emit("j " + loop);
-        e.emit(end + ":");
+        e.emit(e.breakLabels.pop() + ":");
     }
 }

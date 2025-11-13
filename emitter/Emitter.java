@@ -1,6 +1,7 @@
 package emitter;
 
 import java.io.*;
+import java.util.Stack;
 
 import environment.Environment;
 
@@ -17,6 +18,8 @@ public class Emitter extends Environment
     private PrintWriter out;
     private int stackHeight = 0;
     private int labels = 0;
+    public Stack<String> continueLabels = new Stack<>();
+    public Stack<String> breakLabels = new Stack<>();
 
     /**
      * Creates an emitter for writing to a new file with the given name.

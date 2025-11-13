@@ -34,7 +34,14 @@ public class Control<T extends ControlException> implements Statement
     @Override
     public void compile(Emitter e)
     {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'compile'");
+        if (exception instanceof Break)
+        {
+            e.emit("j " + e.breakLabels.peek());
+        }
+        else if (exception instanceof Continue)
+        {
+            e.emit("j " + e.continueLabels.peek());
+        }
+        else throw new UnsupportedOperationException("Unimplemented method 'compile'");
     }
 }

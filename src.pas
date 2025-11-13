@@ -1,8 +1,10 @@
 BEGIN
-count := 1;
+count := 0;
 WHILE count <= 15 DO
 BEGIN
-WRITELN(count);
-count := count + 1;
+    count := count + 1;
+    if count = 5 then continue;
+    if count > 12 then break;
+    WRITELN(count);
 END;
 END;
