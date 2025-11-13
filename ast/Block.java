@@ -1,7 +1,6 @@
 package ast;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import emitter.Emitter;
 import environment.Environment;
@@ -11,31 +10,12 @@ import environment.Environment;
  * @author Daniel Zhu
  * @version 1.0
  */
-public class Block implements Statement
+public class Block extends ArrayList<Statement> implements Statement
 {
-    private List<Statement> statements;
-
-    /**
-     * Constructs an empty block.
-     */
-    public Block()
-    {
-        statements = new ArrayList<>();
-    }
-
-    /**
-     * Adds a statement to the block.
-     * @param statement the statement to add
-     */
-    public void addStatement(Statement statement)
-    {
-        statements.add(statement);
-    }
-
     @Override
 	public void execute(Environment env) throws RTException, ControlException
     {
-        for (Statement statement : statements)
+        for (Statement statement : this)
         {
             statement.execute(env);
         }
@@ -44,7 +24,7 @@ public class Block implements Statement
     @Override
     public void compile(Emitter e)
     {
-        for (Statement statement : statements)
+        for (Statement statement : this)
         {
             statement.compile(e);
         }

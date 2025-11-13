@@ -238,6 +238,7 @@ public class Parser
     {
         eat("FOR");
         String id = currentToken;
+        Num var = new Num(currentToken);
         eat(currentToken);
         eat(":=");
         Expression l = parseExpression();
@@ -245,7 +246,18 @@ public class Parser
         Expression r = parseExpression();
         eat("DO");
         Statement body = parseStatement();
-        return new For(id, l, r, body);
+
+        Block whileBlock = new Block();
+        whileBlock.add(new Assign(id, new BinOp(var, new Num("1"), Op.ADD)));
+        whileBlock.add(body);
+
+        Block block = new Block();
+        block.add(new Assign(id, new BinOp(l, new Num("1"), Op.SUB)));
+        block.add(new While(
+                new BinOp(var, r, Op.LE),
+                whileBlock
+        ));
+        return block;
     }
 
     /**
@@ -284,7 +296,7 @@ public class Parser
             eat("BEGIN");
             while (!isToken("END"))
             {
-                b.addStatement(parseStatement());
+                b.add(parseStatement());
             }
             eat("END");
             s = b;

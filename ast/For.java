@@ -55,7 +55,8 @@ public class For implements Statement
     @Override
     public void compile(Emitter e)
     {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'compile'");
+        l.compile(e);
+        e.emitPush("$v0");
+        r.compile(e);
     }
 }
