@@ -4,7 +4,6 @@ import java.io.*;
 import java.util.Stack;
 
 import ast.Var;
-import environment.Environment;
 
 /**
  * Handles emitting code to an output file.

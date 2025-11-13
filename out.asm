@@ -20,15 +20,11 @@
 move $fp, $sp
 	
 main:
-	subu $sp, $sp, 8
+	subu $sp, $sp, 12
 	li $v0 1
 	# writing to i
 	sw $v0 -4($fp)
 	# done writing to i
-	li $v0 1
-	# writing to j
-	sw $v0 -8($fp)
-	# done writing to j
 L0:
 	# loading i
 	lw $v0 -4($fp)
@@ -106,7 +102,7 @@ L1:
 	j L0
 L2:
 	# loading j
-	lw $v0 -8($fp)
+	lw $v0 -12($fp)
 	# done loading j
 	move $a0 $v0
 	li $v0 1
