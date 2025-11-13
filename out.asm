@@ -54,6 +54,9 @@ L7:
 	move $a0 $v0
 	li $v0 1
 	syscall
+	li $v0 11
+	li $a0 32
+	syscall
 	lw $v0 0($sp)
 	push($v0)
 	li $v0 1
@@ -74,9 +77,6 @@ L5:
 	# writing to i
 	sw $v0 4($sp)
 	# done writing to i
-	move $a0 $v0
-	li $v0 1
-	syscall
 	li $v0 11
 	li $a0 10
 	syscall

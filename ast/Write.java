@@ -35,6 +35,10 @@ public class Write implements Statement
         {
             System.out.println();
         }
+        else
+        {
+            System.out.print(" ");
+        }
     }
 
     @Override
@@ -43,15 +47,21 @@ public class Write implements Statement
         if (expr != null)
         {
             expr.compile(e);
+            e.emit("move $a0 $v0");
+            e.emit("li $v0 1");
+            e.emit("syscall");
         }
-        e.emit("move $a0 $v0");
-        e.emit("li $v0 1");
-        e.emit("syscall");
 
         if (newline)
         {
             e.emit("li $v0 11");
             e.emit("li $a0 10");
+            e.emit("syscall");
+        }
+        else // print space
+        {
+            e.emit("li $v0 11");
+            e.emit("li $a0 32");
             e.emit("syscall");
         }
     }
