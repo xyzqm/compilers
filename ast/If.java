@@ -43,7 +43,16 @@ public class If implements Statement
     @Override
     public void compile(Emitter e)
     {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'compile'");
+        cond.compile(e);
+        String thn = e.nextLabel(), end = e.nextLabel();
+        e.emit("beq $v0, 1, " + thn); // jump to then case
+        if (els != null)
+        {
+            els.compile(e);
+        }
+        e.emit("j " + end);
+        e.emit(thn + ":");
+        then.compile(e);
+        e.emit(end + ":");
     }
 }

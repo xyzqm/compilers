@@ -1,0 +1,18 @@
+[default_config]
+version = "0.10.1"
+assembler = "mars"
+instruction_set = "mips"
+
+[default_config.opts]
+diagnostics = true
+default_diagnostics = true
+
+[[project]]
+path = ""
+version = "0.10.1"
+assembler = "mars"
+instruction_set = "mips"
+
+[project.opts]
+diagnostics = false
+default_diagnostics = false

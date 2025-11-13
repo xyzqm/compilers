@@ -16,6 +16,7 @@ public class Emitter extends Environment
      */
     private PrintWriter out;
     private int stackHeight = 0;
+    private int labels = 0;
 
     /**
      * Creates an emitter for writing to a new file with the given name.
@@ -31,15 +32,19 @@ public class Emitter extends Environment
         {
             throw new RuntimeException(e);
         }
-        // macro for evaluating comparisons (>, <, =, etc)
-       	emit(".macro eval_comp(%branch, %res, %lf, %rt)");
-        emit("%branch %lf, %rt, true");
-        emit("li %res, 0");
-        emit("j end");
-        emit("true:");
-        emit("li %res, 1");
-        emit("end:");
-        emit(".end_macro");
+        // read base.asm and write into out
+        try (BufferedReader reader = new BufferedReader(new FileReader("base.asm")))
+        {
+            String line;
+            while ((line = reader.readLine()) != null)
+            {
+                out.println(line);
+            }
+        }
+        catch (IOException e)
+        {
+            throw new RuntimeException(e);
+        }
         emit("");
     }
 
@@ -54,6 +59,14 @@ public class Emitter extends Environment
             code = "\t" + code;
         }
         out.println(code);
+    }
+
+    /**
+     * Returns the next unused label.
+     */
+    public String nextLabel()
+    {
+        return "L" + labels++;
     }
 
     /**

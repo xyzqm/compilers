@@ -28,7 +28,7 @@ public enum Op
     /**
      * Less than operation.
      */
-    LT((a, b) -> a < b ? 1 : 0, "FIX"),
+    LT((a, b) -> a < b ? 1 : 0, "blt"),
     /**
      * Greater than operation.
      */
@@ -36,27 +36,27 @@ public enum Op
     /**
      * Less than or equal operation.
      */
-    LE((a, b) -> a <= b ? 1 : 0, "FIX"),
+    LE((a, b) -> a <= b ? 1 : 0, "ble"),
     /**
      * Greater than or equal operation.
      */
-    GE((a, b) -> a >= b ? 1 : 0, "FIX"),
+    GE((a, b) -> a >= b ? 1 : 0, "bge"),
     /**
      * Equality operation.
      */
-    EQ((a, b) -> a == b ? 1 : 0, "FIX"),
+    EQ((a, b) -> a == b ? 1 : 0, "beq"),
     /**
      * Not equal operation.
      */
-    NE((a, b) -> a != b ? 1 : 0, "FIX"),
+    NE((a, b) -> a != b ? 1 : 0, "bne"),
     /**
      * Logical AND operation.
      */
-    AND((a, b) -> a != 0 ? b : a, "FIX"),
+    AND((a, b) -> a != 0 ? b : a, "and"),
     /**
      * Logical OR operation.
      */
-    OR((a, b) -> a != 0 ? a : b, "FIX");
+    OR((a, b) -> a != 0 ? a : b, "or");
 
     /**
      * The function implementing the operation.

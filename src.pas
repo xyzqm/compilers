@@ -1,8 +1,8 @@
 BEGIN
-x := 3;
-y := 2 * x;
-WRITELN(x + y);
-z := x > y;
-WRITELN(z);
-WRITELN(x + y > y);
+IF 14 = 14 THEN
+BEGIN
+IF 14 <> 14 THEN WRITELN(3);
+IF 14 <= 14 THEN WRITELN(4);
+END;
+IF 15 > 14 THEN WRITELN(5);
 END;
