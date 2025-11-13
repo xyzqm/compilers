@@ -3,6 +3,7 @@ package emitter;
 import java.io.*;
 import java.util.Stack;
 
+import ast.Var;
 import environment.Environment;
 
 /**
@@ -10,13 +11,13 @@ import environment.Environment;
  * @author Daniel Zhu
  * @version 1.0
  */
-public class Emitter extends Environment
+public class Emitter
 {
     /**
      * The PrintWriter used to write to the output file.
      */
     private PrintWriter out;
-    private int stackHeight = 0;
+    // private int stackHeight = 0;
     private int labels = 0;
     private int vars = 0;
     public Stack<String> continueLabels = new Stack<>();
@@ -52,10 +53,10 @@ public class Emitter extends Environment
         emit("");
     }
 
-    public int getStackHeight()
-    {
-        return stackHeight;
-    }
+    // public int getStackHeight()
+    // {
+    //     return stackHeight;
+    // }
 
     public String nextVar()
     {
@@ -89,7 +90,7 @@ public class Emitter extends Environment
      */
     public void emitPush(String reg)
     {
-        stackHeight += 4;
+        // stackHeight += 4;
         emit("push(" + reg + ")");
     }
 
@@ -99,38 +100,31 @@ public class Emitter extends Environment
      */
     public void emitPop(String reg)
     {
-        stackHeight -= 4;
+        // stackHeight -= 4;
         emit("pop(" + reg + ")");
     }
 
-    public void newVar(String name)
+    public String address(Var var)
     {
-        emitPush("$v0");
-        put(name, stackHeight);
+        return -var.getOffset() + "($fp)";
     }
 
-    public String address(String name)
+    public void getVar(Var var, String reg)
     {
-        return -get(name) + "($fp)";
+        emit("# loading " + var.name());
+        emit("lw " + reg + " " + address(var));
+        emit("# done loading " + var.name());
     }
 
-    public void getVar(String name, String reg)
+    public void writeVar(Var id)
     {
-        emit("lw " + reg + " " + address(name));
-    }
-
-    public void writeVar(String name)
-    {
-        emit("# writing to " + name);
-        if (!containsKey(name))
-        {
-            newVar(name);
-        }
-        else
-        {
-            emit("sw $v0 " + address(name));
-        }
-        emit("# done writing to " + name);
+        emit("# writing to " + id.name());
+        // if (!containsKey(name))
+        // {
+        //     newVar(name);
+        // }
+        emit("sw $v0 " + address(id));
+        emit("# done writing to " + id.name());
     }
 
     public void emitLoop(Runnable body, Runnable inc)

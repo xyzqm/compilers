@@ -53,4 +53,11 @@ public class While implements Statement
             () -> {}
         );
     }
+
+	@Override
+	public void label(Environment e)
+	{
+    	condition.label(e);
+        body.label(e);
+	}
 }

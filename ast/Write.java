@@ -65,4 +65,13 @@ public class Write implements Statement
             e.emit("syscall");
         }
     }
+
+	@Override
+	public void label(Environment e)
+	{
+	    if (expr != null)
+		{
+            expr.label(e);
+		}
+	}
 }

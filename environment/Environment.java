@@ -14,6 +14,8 @@ public class Environment extends HashMap<String, Integer>
 
     private HashMap<String, ProcedureDeclaration> procs = new HashMap<>();
 
+    private int offset = 0;
+
     /**
      * Constructs an environment with a parent.
      * @param parent The parent environment.
@@ -21,6 +23,7 @@ public class Environment extends HashMap<String, Integer>
     public Environment(Environment parent)
     {
         this.parent = parent;
+        this.offset = parent.offset;
     }
 
     /**
@@ -45,32 +48,58 @@ public class Environment extends HashMap<String, Integer>
      * @param key The key to look up.
      * @return The value/address associated with the key, or null if not found.
      */
-    // @Override
-    // public Integer get(Object key)
-    // {
-    //     Integer val = super.get(key);
-    //     if (val == null && parent != null)
-    //     {
-    //         return parent.get(key);
-    //     }
-    //     return val;
-    // }
+    @Override
+    public Integer get(Object key)
+    {
+        Integer val = super.get(key);
+        if (val == null && parent != null)
+        {
+            return parent.get(key);
+        }
+        return val;
+    }
 
-    // /**
-    //  * Checks if the environment contains the given key, searching parent environments if necessary.
-    //  * @param key The key to check.
-    //  * @return True if the key exists, false otherwise.
-    //  */
-    // @Override
-    // public boolean containsKey(Object key)
-    // {
-    //     boolean contains = super.containsKey(key);
-    //     if (!contains && parent != null)
-    //     {
-    //         return parent.containsKey(key);
-    //     }
-    //     return contains;
-    // }
+    /**
+     * Checks if the environment contains the given key, searching parent environments if necessary.
+     * @param key The key to check.
+     * @return True if the key exists, false otherwise.
+     */
+    @Override
+    public boolean containsKey(Object key)
+    {
+        boolean contains = super.containsKey(key);
+        if (!contains && parent != null)
+        {
+            return parent.containsKey(key);
+        }
+        return contains;
+    }
+
+    public int getOffset(String var)
+    {
+        if (containsKey(var))
+        {
+            return get(var);
+        }
+        else
+        {
+            put(var, offset += 4);
+            return offset;
+        }
+    }
+
+    public int getOffset()
+    {
+        return offset;
+    }
+
+    public void updateParentOffset()
+    {
+        if (parent != null)
+        {
+            parent.offset = offset;
+        }
+    }
 
     /**
      * Sets a procedure in the environment.

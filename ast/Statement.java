@@ -16,7 +16,9 @@ public interface Statement
      * @throws RTException If an error occurs during execution.
      * @throws ControlException If a control flow exception occurs.
      */
-    public void execute(Environment env) throws RTException, ControlException;
+    void execute(Environment env) throws RTException, ControlException;
+
+    void label(Environment e);
 
     /**
      * Compiles the statement using the given emitter.

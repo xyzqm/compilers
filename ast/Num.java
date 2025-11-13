@@ -10,13 +10,13 @@ import environment.Environment;
  */
 public class Num implements Expression
 {
-    private String value;
+    private int value;
 
     /**
      * Constructs a Num object with the given value.
-     * @param value the value of the numeric literal, or the variable name
+     * @param integer value
      */
-    public Num(String value)
+    public Num(int value)
     {
         this.value = value;
     }
@@ -24,32 +24,18 @@ public class Num implements Expression
     @Override
     public int eval(Environment env) throws RTException
     {
-        try
-        {
-            int number = Integer.parseInt(value);
-            return number;
-        }
-        catch (NumberFormatException e)
-        {
-            if (env.containsKey(value))
-            {
-                return env.get(value);
-            }
-            throw new RTException(value + " is not defined");
-        }
+        return value;
+    }
+
+    @Override
+    public void label(Environment e)
+    {
     }
 
     @Override
     public void compile(Emitter e)
     {
-        try
-        {
-            int number = Integer.parseInt(value);
-            e.emit("li $v0 " + number);
-        }
-        catch (NumberFormatException nfe)
-        {
-            e.getVar(value, "$v0");
-        }
+        e.emit("li $v0 " + value);
     }
+
 }

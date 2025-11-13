@@ -135,7 +135,15 @@ public class Parser
         }
         else
         {
-            return new Num(cur);
+            try
+            {
+                int number = Integer.parseInt(cur);
+                return new Num(number);
+            }
+            catch (NumberFormatException e)
+            {
+                return new Var(cur);
+            }
         }
     }
 
@@ -156,7 +164,7 @@ public class Parser
         else if (currentToken.equals("-"))
         {
             eat("-");
-            return new BinOp(new Num("0"), parseFactor(), Op.SUB);
+            return new BinOp(new Num(0), parseFactor(), Op.SUB);
         }
         else
         {

@@ -10,7 +10,7 @@ import environment.Environment;
  */
 public class For implements Statement
 {
-    private String id;
+    private Var id;
     private Expression l, r;
     private Statement body;
 
@@ -23,7 +23,7 @@ public class For implements Statement
      */
     public For(String id, Expression l, Expression r, Statement body)
     {
-        this.id = id;
+        this.id = new Var(id);
         this.l = l;
         this.r = r;
         this.body = body;
@@ -36,7 +36,7 @@ public class For implements Statement
         int rt = r.eval(env);
         for (int i = lf; i <= rt; i++)
         {
-            env.put(id, i);
+            env.put(id.name(), i);
             try
             {
                 body.execute(env);
@@ -56,7 +56,7 @@ public class For implements Statement
     public void compile(Emitter e)
     {
         e.emit("# Initialize loop variable " + id);
-        (new Assign(id, l)).compile(e);
+        (new Assign(id.name(), l)).compile(e);
         e.emit("# Done initializing loop variable");
         String var = e.nextVar();
         (new Assign(var, r)).compile(e); // store right bound
@@ -64,7 +64,7 @@ public class For implements Statement
         e.emitLoop(
             () -> {
                 (new If(
-                    new BinOp(new Num(id), new Num(var), Op.GT),
+                    new BinOp(id, new Var(var), Op.GT),
                     new Control<Break>(new Break()),
                     body
                 )).compile(e);
@@ -72,10 +72,18 @@ public class For implements Statement
             () -> {
                 // increment id
                 (new Assign(
-                    id,
-                    new BinOp(new Num(id), new Num("1"), Op.ADD))
+                    id.name(),
+                    new BinOp(id, new Num(1), Op.ADD))
                 ).compile(e);
             }
         );
     }
+
+	@Override
+	public void label(Environment e) {
+	    id.label(e);
+		l.label(e);
+		r.label(e);
+		body.label(e);
+	}
 }

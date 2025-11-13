@@ -10,7 +10,7 @@ import environment.Environment;
  */
 public class Assign implements Statement
 {
-    private String id;
+    private Var id;
     private Expression expr;
 
     /**
@@ -20,19 +20,14 @@ public class Assign implements Statement
  */
     public Assign(String id, Expression expr)
     {
-        this.id = id;
+        this.id = new Var(id);
         this.expr = expr;
-    }
-
-    public String getName()
-    {
-        return id;
     }
 
     @Override
 	public void execute(Environment env) throws RTException
     {
-        env.put(id, expr.eval(env));
+        env.put(id.name(), expr.eval(env));
     }
 
     @Override
@@ -41,4 +36,11 @@ public class Assign implements Statement
         expr.compile(e);
         e.writeVar(id);
     }
+
+	@Override
+	public void label(Environment e)
+	{
+	    id.label(e);
+		expr.label(e);
+	}
 }

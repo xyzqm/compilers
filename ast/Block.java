@@ -29,4 +29,14 @@ public class Block extends ArrayList<Statement> implements Statement
             statement.compile(e);
         }
     }
+
+	@Override
+	public void label(Environment e) {
+	    Environment blockEnv = new Environment(e);
+		for (Statement statement : this)
+		{
+			statement.label(blockEnv);
+		}
+		blockEnv.updateParentOffset();
+	}
 }

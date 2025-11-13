@@ -63,6 +63,15 @@ public class ProcedureCall implements Expression, Statement
     }
 
     @Override
+    public void label(Environment e)
+    {
+        for (Expression arg : arguments)
+        {
+            arg.label(e);
+        }
+    }
+
+    @Override
     public void compile(Emitter e)
     {
         // TODO Auto-generated method stub
