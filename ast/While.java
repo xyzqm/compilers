@@ -44,10 +44,13 @@ public class While implements Statement
     @Override
     public void compile(Emitter e)
     {
-        e.emitLoop(() -> {
-            condition.compile(e);
-            e.emit("beq $v0, $zero, " + e.breakLabels.peek());
-            body.compile(e);
-        });
+        e.emitLoop(
+            () -> {
+                condition.compile(e);
+                e.emit("beq $v0, $zero, " + e.breakLabels.peek());
+                body.compile(e);
+            },
+            () -> {}
+        );
     }
 }

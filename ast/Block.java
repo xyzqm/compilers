@@ -7,7 +7,6 @@ import environment.Environment;
 
 /**
  * Represents a block of statements.
- * All local variables should be cleared after execution.
  * @author Daniel Zhu
  * @version 1.0
  */

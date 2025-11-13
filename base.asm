@@ -16,3 +16,5 @@
 	lw %reg ($sp)
 	addu $sp $sp 4
 .end_macro
+
+move $fp, $sp

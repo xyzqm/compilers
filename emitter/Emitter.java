@@ -18,6 +18,7 @@ public class Emitter extends Environment
     private PrintWriter out;
     private int stackHeight = 0;
     private int labels = 0;
+    private int vars = 0;
     public Stack<String> continueLabels = new Stack<>();
     public Stack<String> breakLabels = new Stack<>();
 
@@ -54,6 +55,11 @@ public class Emitter extends Environment
     public int getStackHeight()
     {
         return stackHeight;
+    }
+
+    public String nextVar()
+    {
+        return "V" + vars++;
     }
 
     /**
@@ -105,7 +111,7 @@ public class Emitter extends Environment
 
     public String address(String name)
     {
-        return (stackHeight - get(name)) + "($sp)";
+        return -get(name) + "($fp)";
     }
 
     public void getVar(String name, String reg)
@@ -127,7 +133,7 @@ public class Emitter extends Environment
         emit("# done writing to " + name);
     }
 
-    public void emitLoop(Runnable body)
+    public void emitLoop(Runnable body, Runnable inc)
     {
         String loop = nextLabel();
         continueLabels.push(nextLabel());
@@ -138,6 +144,7 @@ public class Emitter extends Environment
 
         emit("# continue label");
         emit(continueLabels.pop() + ":");
+        inc.run();
         emit("j " + loop);
         emit(breakLabels.pop() + ":");
     }
