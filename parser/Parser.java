@@ -274,11 +274,18 @@ public class Parser
     public Statement parseStatement(boolean eatSemi) throws ScanErrorException
     {
         Statement s = null;
-        if (isToken("WRITELN"))
+        if (isToken("WRITE"))
+        {
+            eat("WRITE");
+            eat("(");
+            s = new Write(parseExpression(), false);
+            eat(")");
+        }
+        else if (isToken("WRITELN"))
         {
             eat("WRITELN");
             eat("(");
-            s = new Writeln(parseExpression());
+            s = new Write(isToken(")") ? null : parseExpression(), true);
             eat(")");
         }
         else if (isToken("READLN"))

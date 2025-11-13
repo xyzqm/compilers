@@ -8,36 +8,51 @@ import environment.Environment;
  * @author Daniel Zhu
  * @version 1.0
  */
-public class Writeln implements Statement
+public class Write implements Statement
 {
     private Expression expr;
+    private boolean newline;
 
     /**
      * Constructs a Writeln statement with the given expression.
      *
      * @param expr the expression to be written to the console
      */
-    public Writeln(Expression expr)
+    public Write(Expression expr, boolean newline)
     {
         this.expr = expr;
+        this.newline = newline;
     }
 
     @Override
     public void execute(Environment env) throws RTException
     {
-        System.out.println(expr.eval(env));
+        if (expr != null)
+        {
+            System.out.print(expr.eval(env));
+        }
+        if (newline)
+        {
+            System.out.println();
+        }
     }
 
     @Override
     public void compile(Emitter e)
     {
-        expr.compile(e);
+        if (expr != null)
+        {
+            expr.compile(e);
+        }
         e.emit("move $a0 $v0");
         e.emit("li $v0 1");
         e.emit("syscall");
-        // print newline
-        e.emit("li $v0 11");
-        e.emit("li $a0 10");
-        e.emit("syscall");
+
+        if (newline)
+        {
+            e.emit("li $v0 11");
+            e.emit("li $a0 10");
+            e.emit("syscall");
+        }
     }
 }

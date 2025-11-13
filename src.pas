@@ -6,10 +6,11 @@ begin
     while j <= 5 do
     begin
         if j > i then break;
-        writeln(j);
+        write(j);
         j := j + 1;
     end;
     i := i + 1;
+    writeln();
 end;
 writeln(j);
 end;

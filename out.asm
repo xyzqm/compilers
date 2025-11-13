@@ -54,9 +54,6 @@ L7:
 	move $a0 $v0
 	li $v0 1
 	syscall
-	li $v0 11
-	li $a0 10
-	syscall
 	lw $v0 0($sp)
 	push($v0)
 	li $v0 1
@@ -65,17 +62,32 @@ L7:
 	# writing to j
 	sw $v0 0($sp)
 	# done writing to j
-	pop($v0)
 	# continue label
 L4:
 	j L3
 L5:
-	lw $v0 0($sp)
+	lw $v0 4($sp)
 	push($v0)
 	li $v0 1
 	pop($t0)
 	add $v0 $t0 $v0
 	# writing to i
-	sw $v0 0($sp)
+	sw $v0 4($sp)
 	# done writing to i
-	pop($v0)
+	move $a0 $v0
+	li $v0 1
+	syscall
+	li $v0 11
+	li $a0 10
+	syscall
+	# continue label
+L1:
+	j L0
+L2:
+	lw $v0 0($sp)
+	move $a0 $v0
+	li $v0 1
+	syscall
+	li $v0 11
+	li $a0 10
+	syscall
