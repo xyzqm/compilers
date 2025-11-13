@@ -24,6 +24,11 @@ public class Assign implements Statement
         this.expr = expr;
     }
 
+    public String getName()
+    {
+        return id;
+    }
+
     @Override
 	public void execute(Environment env) throws RTException
     {

@@ -51,6 +51,11 @@ public class Emitter extends Environment
         emit("");
     }
 
+    public int getStackHeight()
+    {
+        return stackHeight;
+    }
+
     /**
      * Prints one line of code to file (with non-labels indented).
      * @param code The code to emit.
@@ -79,8 +84,7 @@ public class Emitter extends Environment
     public void emitPush(String reg)
     {
         stackHeight += 4;
-        emit("subu $sp $sp 4");
-        emit("sw " + reg + " ($sp)");
+        emit("push(" + reg + ")");
     }
 
     /**
@@ -90,8 +94,7 @@ public class Emitter extends Environment
     public void emitPop(String reg)
     {
         stackHeight -= 4;
-        emit("lw " + reg + " ($sp)");
-        emit("addu $sp $sp 4");
+        emit("pop(" + reg + ")");
     }
 
     public void newVar(String name)
@@ -105,13 +108,14 @@ public class Emitter extends Environment
         return (stackHeight - get(name)) + "($sp)";
     }
 
-    public void getVar(String name)
+    public void getVar(String name, String reg)
     {
-        emit("lw $v0 " + address(name));
+        emit("lw " + reg + " " + address(name));
     }
 
     public void writeVar(String name)
     {
+        emit("# writing to " + name);
         if (!containsKey(name))
         {
             newVar(name);
@@ -120,6 +124,22 @@ public class Emitter extends Environment
         {
             emit("sw $v0 " + address(name));
         }
+        emit("# done writing to " + name);
+    }
+
+    public void emitLoop(Runnable body)
+    {
+        String loop = nextLabel();
+        continueLabels.push(nextLabel());
+        breakLabels.push(nextLabel());
+        emit(loop + ":");
+
+        body.run();
+
+        emit("# continue label");
+        emit(continueLabels.pop() + ":");
+        emit("j " + loop);
+        emit(breakLabels.pop() + ":");
     }
 
     /**

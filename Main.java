@@ -35,6 +35,7 @@ public class Main
         ));
         Parser parser = new Parser(src);
         Program p = parser.parseProgram();
+        p.execute();
         p.compile("out.asm");
         // p.execute();
         // p.compile("out.asm");

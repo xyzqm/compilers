@@ -29,22 +29,25 @@ public class While implements Statement
     {
     	while (condition.eval(env) != 0)
     	{
-            body.execute(env);
+         try {
+             body.execute(env);
+         }
+         catch (Break b) {
+             break;
+         }
+         catch (Continue c) {
+             continue;
+         }
     	}
     }
 
     @Override
     public void compile(Emitter e)
     {
-        String loop = e.nextLabel();
-        e.continueLabels.push(e.nextLabel());
-        e.breakLabels.push(e.nextLabel());
-        e.emit(loop + ":");
-        condition.compile(e);
-        e.emit("beq $v0, $zero, " + e.breakLabels.peek());
-        body.compile(e);
-        e.emit(e.continueLabels.pop() + ":");
-        e.emit("j " + loop);
-        e.emit(e.breakLabels.pop() + ":");
+        e.emitLoop(() -> {
+            condition.compile(e);
+            e.emit("beq $v0, $zero, " + e.breakLabels.peek());
+            body.compile(e);
+        });
     }
 }

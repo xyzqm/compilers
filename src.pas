@@ -1,16 +1,15 @@
-BEGIN
-count := 0;
-WHILE count <= 15 DO
-BEGIN
-    count := count + 1;
-    if count = 5 then continue;
-    if count > 12 then break;
-    WRITELN(count);
-END;
-for i := 1 to 10 do
 begin
-    if i = 3 then continue;
-    if i = 7 then break;
-    WRITELN(i);
+i := 1;
+while i <= 5 do
+begin
+    j := 1;
+    while j <= 5 do
+    begin
+        if j > i then break;
+        writeln(j);
+        j := j + 1;
+    end;
+    i := i + 1;
 end;
-END;
+writeln(j);
+end;

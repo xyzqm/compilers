@@ -55,8 +55,21 @@ public class For implements Statement
     @Override
     public void compile(Emitter e)
     {
-        l.compile(e);
-        e.emitPush("$v0");
-        r.compile(e);
+        // e.emit("# Initialize loop variable " + id);
+        // (new Assign(id, new BinOp(l, new Num("1"), Op.SUB))).compile(e);
+        // e.emit("# Done initializing loop variable");
+        // String var = e.nextVar();
+        // (new Assign(var, r)).compile(e); // store right bound
+
+        // e.emitLoop(() -> {
+        //     // write id + 1 to $v0
+        //     (new BinOp(new Num(id), new Num("1"), Op.ADD)).compile(e);
+        //     // condition
+        //     e.getVar(var, "$t0");
+        //     e.emit("bgt $v0, $t0, " + e.breakLabels.peek());
+        //     // set id to $v0
+        //     e.writeVar(id);
+        //     body.compile(e);
+        // });
     }
 }
