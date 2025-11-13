@@ -6,13 +6,23 @@ java Main.java && java -jar Mars4_5.jar out.asm
 
 # Design Notes
 
-Variable scope works in the same fashion as Python.
+Variable scope works in a similar fashion as Python.
 
 For instance:
+
+```
+j := 0;
+for i from 0 to 10: j := i;
+writeln(j);
+```
+
+will output 10.
+
+However,
 
 ```
 for i from 0 to 10: j := i;
 writeln(j);
 ```
 
-Will output 10.
+will output 0 because since `j` is not declared before the loop, it becomes local to the loop body.
