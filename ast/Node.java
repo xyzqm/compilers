@@ -1,0 +1,21 @@
+package ast;
+
+import emitter.Emitter;
+import environment.Environment;
+
+/**
+ * Represents an node in the AST.
+ * @author Daniel Zhu
+ * @version 1.0
+ */
+public interface Node
+{
+    void label(Environment e);
+
+    /**
+     * Compiles the expression using the given emitter.
+     * @param e The emitter to use for code generation.
+     */
+    void compile(Emitter e);
+
+}

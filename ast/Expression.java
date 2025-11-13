@@ -1,6 +1,5 @@
 package ast;
 
-import emitter.Emitter;
 import environment.Environment;
 
 /**
@@ -8,7 +7,7 @@ import environment.Environment;
  * @author Daniel Zhu
  * @version 1.0
  */
-public interface Expression
+public interface Expression extends Node
 {
     /**
     * Evaluates the expression in a given environment.
@@ -17,13 +16,4 @@ public interface Expression
     * @throws RTException If an error occurs during evaluation.
  */
     int eval(Environment env) throws RTException;
-
-    void label(Environment e);
-
-    /**
-     * Compiles the expression using the given emitter.
-     * @param e The emitter to use for code generation.
-     */
-    void compile(Emitter e);
-
 }

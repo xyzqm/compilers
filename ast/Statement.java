@@ -8,7 +8,7 @@ import environment.Environment;
  * @author Daniel Zhu
  * @version 1.0
  */
-public interface Statement
+public interface Statement extends Node
 {
     /**
      * Executes the statement in the given environment.
