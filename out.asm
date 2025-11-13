@@ -8,68 +8,32 @@
 .end_macro
 	
 main:
-	li $v0 14
-	subu $sp $sp 4
-	sw $v0 ($sp)
-	li $v0 14
-	lw $t0 ($sp)
-	addu $sp $sp 4
-	eval_comp(beq, $v0, $t0, $v0)
-	beq $v0, 1, L0
-	j L1
-L0:
-	li $v0 14
-	subu $sp $sp 4
-	sw $v0 ($sp)
-	li $v0 14
-	lw $t0 ($sp)
-	addu $sp $sp 4
-	eval_comp(bne, $v0, $t0, $v0)
-	beq $v0, 1, L2
-	j L3
-L2:
-	li $v0 3
-	move $a0 $v0
 	li $v0 1
-	syscall
-	li $v0 11
-	li $a0 10
-	syscall
-L3:
-	li $v0 14
 	subu $sp $sp 4
 	sw $v0 ($sp)
-	li $v0 14
+L0:
+	lw $v0 0($sp)
+	subu $sp $sp 4
+	sw $v0 ($sp)
+	li $v0 15
 	lw $t0 ($sp)
 	addu $sp $sp 4
 	eval_comp(ble, $v0, $t0, $v0)
-	beq $v0, 1, L4
-	j L5
-L4:
-	li $v0 4
+	beq $v0, $zero, L1
+	lw $v0 0($sp)
 	move $a0 $v0
 	li $v0 1
 	syscall
 	li $v0 11
 	li $a0 10
 	syscall
-L5:
-L1:
-	li $v0 15
+	lw $v0 0($sp)
 	subu $sp $sp 4
 	sw $v0 ($sp)
-	li $v0 14
+	li $v0 1
 	lw $t0 ($sp)
 	addu $sp $sp 4
-	eval_comp(bgt, $v0, $t0, $v0)
-	beq $v0, 1, L6
-	j L7
-L6:
-	li $v0 5
-	move $a0 $v0
-	li $v0 1
-	syscall
-	li $v0 11
-	li $a0 10
-	syscall
-L7:
+	add $v0 $t0 $v0
+	sw $v0 0($sp)
+	j L0
+L1:

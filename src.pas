@@ -1,8 +1,8 @@
 BEGIN
-IF 14 = 14 THEN
+count := 1;
+WHILE count <= 15 DO
 BEGIN
-IF 14 <> 14 THEN WRITELN(3);
-IF 14 <= 14 THEN WRITELN(4);
+WRITELN(count);
+count := count + 1;
 END;
-IF 15 > 14 THEN WRITELN(5);
 END;

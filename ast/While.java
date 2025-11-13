@@ -36,7 +36,13 @@ public class While implements Statement
     @Override
     public void compile(Emitter e)
     {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'compile'");
+        String loop = e.nextLabel(), end = e.nextLabel();
+        e.emit(loop + ":");
+        condition.compile(e);
+        e.emit("beq $v0, $zero, " + end);
+        body.compile(e);
+        e.emit("j " + loop);
+        e.emit(end + ":");
     }
+
 }
