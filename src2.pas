@@ -5,9 +5,7 @@ begin
     begin
         if j > i then break;
         write(j);
-        j := j + 1;
     end;
-    i := i + 1;
     writeln();
 end;
 writeln(j);
