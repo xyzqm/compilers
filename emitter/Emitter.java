@@ -197,10 +197,6 @@ public class Emitter extends Environment
     public void writeVar(Var id)
     {
         emit("# writing to " + id.name());
-        // if (!containsKey(name))
-        // {
-        //     newVar(name);
-        // }
         emit("sw $v0 " + address(id));
         emit("# done writing to " + id.name());
     }
@@ -216,9 +212,9 @@ public class Emitter extends Environment
         continueLabels.push(nextLabel());
         breakLabels.push(nextLabel());
         emit(loop + ":");
-    
+
         body.run();
-    
+
         emit("# continue label");
         emit(continueLabels.pop() + ":");
         inc.run();

@@ -254,17 +254,6 @@ public class Parser
         eat("DO");
         Statement body = parseStatement();
         return new For(id, l, r, body);
-        // Block whileBlock = new Block();
-        // whileBlock.add(new Assign(id, new BinOp(var, new Num("1"), Op.ADD)));
-        // whileBlock.add(body);
-
-        // Block block = new Block();
-        // block.add(new Assign(id, new BinOp(l, new Num("1"), Op.SUB)));
-        // block.add(new While(
-        //         new BinOp(var, r, Op.LT),
-        //         whileBlock
-        // ));
-        // return block;
     }
 
     /**
