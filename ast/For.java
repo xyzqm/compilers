@@ -78,12 +78,4 @@ public class For implements Statement
             }
         );
     }
-
-	@Override
-	public void label(Environment e) {
-	    id.label(e);
-		l.label(e);
-		r.label(e);
-		body.label(e);
-	}
 }

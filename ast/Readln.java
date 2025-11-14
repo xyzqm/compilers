@@ -33,10 +33,4 @@ public class Readln implements Statement
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'compile'");
     }
-
-	@Override
-	public void label(Environment e) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'label'");
-	}
 }

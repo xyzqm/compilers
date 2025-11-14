@@ -20,14 +20,14 @@
 move $fp, $sp
 	
 main:
-	subu $sp, $sp, 12
 	li $v0 1
 	# writing to i
-	sw $v0 -4($fp)
+	push($zero)
+	sw $v0 0($sp)
 	# done writing to i
 L0:
 	# loading i
-	lw $v0 -4($fp)
+	lw $v0 0($sp)
 	# done loading i
 	push($v0)
 	li $v0 5
@@ -36,11 +36,12 @@ L0:
 	beq $v0, $zero, L2
 	li $v0 1
 	# writing to j
-	sw $v0 -8($fp)
+	push($zero)
+	sw $v0 0($sp)
 	# done writing to j
 L3:
 	# loading j
-	lw $v0 -8($fp)
+	lw $v0 0($sp)
 	# done loading j
 	push($v0)
 	li $v0 5
@@ -48,11 +49,11 @@ L3:
 	eval_comp(ble, $v0, $t0, $v0)
 	beq $v0, $zero, L5
 	# loading j
-	lw $v0 -8($fp)
+	lw $v0 0($sp)
 	# done loading j
 	push($v0)
 	# loading i
-	lw $v0 -4($fp)
+	lw $v0 8($sp)
 	# done loading i
 	pop($t0)
 	eval_comp(bgt, $v0, $t0, $v0)
@@ -62,7 +63,7 @@ L6:
 	j L5
 L7:
 	# loading j
-	lw $v0 -8($fp)
+	lw $v0 0($sp)
 	# done loading j
 	move $a0 $v0
 	li $v0 1
@@ -71,38 +72,40 @@ L7:
 	li $a0 32
 	syscall
 	# loading j
-	lw $v0 -8($fp)
+	lw $v0 0($sp)
 	# done loading j
 	push($v0)
 	li $v0 1
 	pop($t0)
 	add $v0 $t0 $v0
 	# writing to j
-	sw $v0 -8($fp)
+	sw $v0 0($sp)
 	# done writing to j
 	# continue label
 L4:
 	j L3
 L5:
 	# loading i
-	lw $v0 -4($fp)
+	lw $v0 4($sp)
 	# done loading i
 	push($v0)
 	li $v0 1
 	pop($t0)
 	add $v0 $t0 $v0
 	# writing to i
-	sw $v0 -4($fp)
+	sw $v0 4($sp)
 	# done writing to i
 	li $v0 11
 	li $a0 10
 	syscall
+	pop($v0)
 	# continue label
 L1:
 	j L0
 L2:
 	# loading j
-	lw $v0 -12($fp)
+	push($zero)
+	lw $v0 0($sp)
 	# done loading j
 	move $a0 $v0
 	li $v0 1
@@ -110,3 +113,5 @@ L2:
 	li $v0 11
 	li $a0 10
 	syscall
+	pop($v0)
+	pop($v0)

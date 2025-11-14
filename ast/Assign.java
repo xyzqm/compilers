@@ -36,11 +36,4 @@ public class Assign implements Statement
         expr.compile(e);
         e.writeVar(id);
     }
-
-	@Override
-	public void label(Environment e)
-	{
-	    id.label(e);
-		expr.label(e);
-	}
 }

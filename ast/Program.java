@@ -43,8 +43,6 @@ public class Program extends Environment
     {
         Emitter e = new Emitter(filename);
         e.emit("main:");
-        body.label(this);
-        e.emit("subu $sp, $sp, " + getOffset());
         body.compile(e);
         e.close();
     }

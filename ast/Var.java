@@ -11,7 +11,6 @@ import environment.Environment;
 public class Var implements Expression
 {
     private String id;
-    private int offset = -1;
 
     /**
      * Constructs a Num object with the given value.
@@ -32,25 +31,9 @@ public class Var implements Expression
         throw new RTException(id + " is not defined");
     }
 
-    public int getOffset()
-    {
-        return offset;
-    }
-
-    public void setOffset(int offset)
-    {
-        this.offset = offset;
-    }
-
     public String name()
     {
         return id;
-    }
-
-    @Override
-    public void label(Environment e)
-    {
-        offset = e.getOffset(id);
     }
 
     @Override

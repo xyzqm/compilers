@@ -24,19 +24,12 @@ public class Block extends ArrayList<Statement> implements Statement
     @Override
     public void compile(Emitter e)
     {
+        e.pushEnv();
         for (Statement statement : this)
         {
             statement.compile(e);
         }
+        e.popEnv();
     }
 
-	@Override
-	public void label(Environment e) {
-	    Environment blockEnv = new Environment(e);
-		for (Statement statement : this)
-		{
-			statement.label(blockEnv);
-		}
-		blockEnv.updateParentOffset();
-	}
 }

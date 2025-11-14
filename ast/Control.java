@@ -44,9 +44,4 @@ public class Control<T extends ControlException> implements Statement
         }
         else throw new UnsupportedOperationException("Unimplemented method 'compile'");
     }
-
-	@Override
-	public void label(Environment e)
-	{
-	}
 }

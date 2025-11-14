@@ -4,23 +4,25 @@ import java.io.*;
 import java.util.Stack;
 
 import ast.Var;
+import environment.Environment;
 
 /**
  * Handles emitting code to an output file.
  * @author Daniel Zhu
  * @version 1.0
  */
-public class Emitter
+public class Emitter extends Environment
 {
     /**
      * The PrintWriter used to write to the output file.
      */
     private PrintWriter out;
-    // private int stackHeight = 0;
+    private int stackHeight = 0;
     private int labels = 0;
     private int vars = 0;
     public Stack<String> continueLabels = new Stack<>();
     public Stack<String> breakLabels = new Stack<>();
+    private Environment env = this;
 
     /**
      * Creates an emitter for writing to a new file with the given name.
@@ -62,6 +64,20 @@ public class Emitter
         return "V" + vars++;
     }
 
+    public void pushEnv()
+    {
+        env = new Environment(env);
+    }
+
+    public void popEnv()
+    {
+        for (int i = 0; i < env.size(); i++)
+        {
+            emitPop("$v0");
+        }
+        env = env.getParent();
+    }
+
     /**
      * Prints one line of code to file (with non-labels indented).
      * @param code The code to emit.
@@ -89,7 +105,7 @@ public class Emitter
      */
     public void emitPush(String reg)
     {
-        // stackHeight += 4;
+        stackHeight += 4;
         emit("push(" + reg + ")");
     }
 
@@ -99,13 +115,18 @@ public class Emitter
      */
     public void emitPop(String reg)
     {
-        // stackHeight -= 4;
+        stackHeight -= 4;
         emit("pop(" + reg + ")");
     }
 
     public String address(Var var)
     {
-        return -var.getOffset() + "($fp)";
+        if (!env.containsKey(var.name()))
+        {
+            emitPush("$zero");
+            env.put(var.name(), stackHeight);
+        }
+        return (stackHeight - env.get(var.name())) + "($sp)";
     }
 
     public void getVar(Var var, String reg)

@@ -55,15 +55,4 @@ public class If implements Statement
         then.compile(e);
         e.emit(end + ":");
     }
-
-	@Override
-	public void label(Environment e)
-	{
-	    cond.label(e);
-		then.label(e);
-		if (els != null)
-		{
-			els.label(e);
-		}
-	}
 }

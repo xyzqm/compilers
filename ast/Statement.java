@@ -17,12 +17,4 @@ public interface Statement extends Node
      * @throws ControlException If a control flow exception occurs.
      */
     void execute(Environment env) throws RTException, ControlException;
-
-    void label(Environment e);
-
-    /**
-     * Compiles the statement using the given emitter.
-     * @param e The emitter to use for code generation.
-     */
-    void compile(Emitter e);
 }

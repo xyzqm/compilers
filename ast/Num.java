@@ -28,11 +28,6 @@ public class Num implements Expression
     }
 
     @Override
-    public void label(Environment e)
-    {
-    }
-
-    @Override
     public void compile(Emitter e)
     {
         e.emit("li $v0 " + value);

@@ -10,12 +10,9 @@ import environment.Environment;
  */
 public interface Node
 {
-    void label(Environment e);
-
     /**
      * Compiles the expression using the given emitter.
      * @param e The emitter to use for code generation.
      */
     void compile(Emitter e);
-
 }

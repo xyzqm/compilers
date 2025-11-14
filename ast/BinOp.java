@@ -36,13 +36,6 @@ public class BinOp implements Expression
     }
 
     @Override
-    public void label(Environment e)
-    {
-        left.label(e);
-        right.label(e);
-    }
-
-    @Override
     public void compile(Emitter e)
     {
         left.compile(e);
