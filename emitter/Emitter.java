@@ -16,12 +16,39 @@ public class Emitter extends Environment
     /**
      * The PrintWriter used to write to the output file.
      */
+    /**
+     * The PrintWriter used to write to the output file.
+     */
     private PrintWriter out;
+
+    /**
+     * The current stack height in bytes.
+     */
     private int stackHeight = 0;
+
+    /**
+     * The label counter for generating unique labels.
+     */
     private int labels = 0;
+
+    /**
+     * The variable counter for generating unique variable names.
+     */
     private int vars = 0;
+
+    /**
+     * Stack of continue labels for nested loops.
+     */
     public Stack<String> continueLabels = new Stack<>();
+
+    /**
+     * Stack of break labels for nested loops.
+     */
     public Stack<String> breakLabels = new Stack<>();
+
+    /**
+     * The current environment for variable storage.
+     */
     private Environment env = this;
 
     /**
@@ -54,21 +81,26 @@ public class Emitter extends Environment
         emit("");
     }
 
-    // public int getStackHeight()
-    // {
-    //     return stackHeight;
-    // }
-
+    /**
+     * Returns the next unused variable name.
+     * @return The next variable name.
+     */
     public String nextVar()
     {
         return "V" + vars++;
     }
 
+    /**
+     * Pushes a new environment onto the environment stack.
+     */
     public void pushEnv()
     {
         env = new Environment(env);
     }
 
+    /**
+     * Pops the current environment from the environment stack.
+     */
     public void popEnv()
     {
         for (int i = 0; i < env.size(); i++)
@@ -94,11 +126,19 @@ public class Emitter extends Environment
     /**
      * Returns the next unused label.
      */
+    /**
+     * Returns the next unused label.
+     * @return The next label string.
+     */
     public String nextLabel()
     {
         return "L" + labels++;
     }
 
+    /**
+     * Emits code to push a register onto the stack.
+     * @param reg The register to push.
+     */
     /**
      * Emits code to push a register onto the stack.
      * @param reg The register to push.
@@ -113,12 +153,21 @@ public class Emitter extends Environment
      * Emits code to pop a register from the stack.
      * @param reg The register to pop into.
      */
+    /**
+     * Emits code to pop a register from the stack.
+     * @param reg The register to pop into.
+     */
     public void emitPop(String reg)
     {
         stackHeight -= 4;
         emit("pop(" + reg + ")");
     }
 
+    /**
+     * Returns the stack address for a variable, allocating space if needed.
+     * @param var The variable.
+     * @return The stack address string.
+     */
     public String address(Var var)
     {
         if (!env.containsKey(var.name()))
@@ -129,6 +178,11 @@ public class Emitter extends Environment
         return (stackHeight - env.get(var.name())) + "($sp)";
     }
 
+    /**
+     * Emits code to load a variable into a register.
+     * @param var The variable to load.
+     * @param reg The register to load into.
+     */
     public void getVar(Var var, String reg)
     {
         emit("# loading " + var.name());
@@ -136,6 +190,10 @@ public class Emitter extends Environment
         emit("# done loading " + var.name());
     }
 
+    /**
+     * Emits code to write a register value to a variable.
+     * @param id The variable to write to.
+     */
     public void writeVar(Var id)
     {
         emit("# writing to " + id.name());
@@ -147,15 +205,20 @@ public class Emitter extends Environment
         emit("# done writing to " + id.name());
     }
 
+    /**
+     * Emits code for a loop structure.
+     * @param body The loop body as a Runnable.
+     * @param inc The increment operation as a Runnable.
+     */
     public void emitLoop(Runnable body, Runnable inc)
     {
         String loop = nextLabel();
         continueLabels.push(nextLabel());
         breakLabels.push(nextLabel());
         emit(loop + ":");
-
+    
         body.run();
-
+    
         emit("# continue label");
         emit(continueLabels.pop() + ":");
         inc.run();
@@ -163,6 +226,9 @@ public class Emitter extends Environment
         emit(breakLabels.pop() + ":");
     }
 
+    /**
+     * Closes the file. Should be called after all calls to emit.
+     */
     /**
      * Closes the file. Should be called after all calls to emit.
      */

@@ -31,6 +31,10 @@ public class Var implements Expression
         throw new RTException(id + " is not defined");
     }
 
+    /**
+     * Returns the variable name.
+     * @return the variable name as a string
+     */
     public String name()
     {
         return id;

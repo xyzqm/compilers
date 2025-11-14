@@ -1,7 +1,6 @@
 package ast;
 
 import emitter.Emitter;
-import environment.Environment;
 
 /**
  * Represents an node in the AST.

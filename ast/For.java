@@ -62,20 +62,22 @@ public class For implements Statement
         (new Assign(var, r)).compile(e); // store right bound
 
         e.emitLoop(
-            () -> {
-                (new If(
-                    new BinOp(id, new Var(var), Op.GT),
-                    new Control<Break>(new Break()),
-                    body
-                )).compile(e);
-            },
-            () -> {
-                // increment id
-                (new Assign(
-                    id.name(),
-                    new BinOp(id, new Num(1), Op.ADD))
-                ).compile(e);
-            }
+                () ->
+                {
+                    (new If(
+                        new BinOp(id, new Var(var), Op.GT),
+                        new Control<Break>(new Break()),
+                        body
+                    )).compile(e);
+                },
+                () ->
+                {
+                    // increment id
+                    (new Assign(
+                        id.name(),
+                        new BinOp(id, new Num(1), Op.ADD))
+                    ).compile(e);
+                }
         );
     }
 }

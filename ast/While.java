@@ -29,15 +29,18 @@ public class While implements Statement
     {
     	while (condition.eval(env) != 0)
     	{
-         try {
-             body.execute(env);
-         }
-         catch (Break b) {
-             break;
-         }
-         catch (Continue c) {
-             continue;
-         }
+            try
+            {
+                body.execute(env);
+            }
+            catch (Break b)
+            {
+                break;
+            }
+            catch (Continue c)
+            {
+                continue;
+            }
     	}
     }
 
@@ -45,12 +48,15 @@ public class While implements Statement
     public void compile(Emitter e)
     {
         e.emitLoop(
-            () -> {
-                condition.compile(e);
-                e.emit("beq $v0, $zero, " + e.breakLabels.peek());
-                body.compile(e);
-            },
-            () -> {}
+                () ->
+                {
+                    condition.compile(e);
+                    e.emit("beq $v0, $zero, " + e.breakLabels.peek());
+                    body.compile(e);
+                },
+                () ->
+                {
+                }
         );
     }
 }

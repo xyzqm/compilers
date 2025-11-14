@@ -17,6 +17,7 @@ public class Write implements Statement
      * Constructs a Writeln statement with the given expression.
      *
      * @param expr the expression to be written to the console
+     * @param newline whether to print a newline after the expression
      */
     public Write(Expression expr, boolean newline)
     {

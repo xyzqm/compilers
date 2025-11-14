@@ -44,9 +44,11 @@ public class Environment extends HashMap<String, Integer>
     }
 
     /**
-     * Gets the value (interpreter)/address (compiler) for the given key, searching parent environments if necessary.
+     * Gets the value (interpreter) or address (compiler) for the given key.
+     * Searches parent environments if necessary.
      * @param key The key to look up.
-     * @return The value/address associated with the key, or null if not found.
+     * @return The value or address associated with the key,
+     *         or null if not found.
      */
     @Override
     public Integer get(Object key)
@@ -75,6 +77,11 @@ public class Environment extends HashMap<String, Integer>
         return contains;
     }
 
+    /**
+     * Gets the offset for a variable, allocating space if needed.
+     * @param var The variable name.
+     * @return The offset for the variable.
+     */
     public int getOffset(String var)
     {
         if (containsKey(var))
@@ -83,16 +90,24 @@ public class Environment extends HashMap<String, Integer>
         }
         else
         {
-            put(var, offset += 4);
+            offset += 4;
+            put(var, offset);
             return offset;
         }
     }
 
+    /**
+     * Gets the current offset value.
+     * @return The current offset.
+     */
     public int getOffset()
     {
         return offset;
     }
 
+    /**
+     * Updates the parent environment's offset to match this environment.
+     */
     public void updateParentOffset()
     {
         if (parent != null)
