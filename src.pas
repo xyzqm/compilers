@@ -1,9 +1,10 @@
 begin
+readln(n);
 i := 1;
-while i <= 5 do
+while i <= n do
 begin
     j := 1;
-    while j <= 5 do
+    while j <= n do
     begin
         if j > i then break;
         write(j);

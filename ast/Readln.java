@@ -10,7 +10,7 @@ import environment.Environment;
  */
 public class Readln implements Statement
 {
-    String var;
+    Var var;
 
     /**
      * Constructs a new Readln statement with the given variable name.
@@ -18,19 +18,20 @@ public class Readln implements Statement
      */
     public Readln(String var)
     {
-        this.var = var;
+        this.var = new Var(var);
     }
 
     @Override
 	public void execute(Environment env) throws RTException
     {
-        env.put(var, Integer.parseInt(System.console().readLine()));
+        env.put(var.name(), Integer.parseInt(System.console().readLine()));
     }
 
     @Override
     public void compile(Emitter e)
     {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'compile'");
+        e.emit("li $v0, 5");
+        e.emit("syscall");
+        e.writeVar(var);
     }
 }

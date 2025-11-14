@@ -20,6 +20,12 @@
 move $fp, $sp
 	
 main:
+	li $v0, 5
+	syscall
+	# writing to n
+	push($zero)
+	sw $v0 0($sp)
+	# done writing to n
 	li $v0 1
 	# writing to i
 	push($zero)
@@ -30,7 +36,9 @@ L0:
 	lw $v0 0($sp)
 	# done loading i
 	push($v0)
-	li $v0 5
+	# loading n
+	lw $v0 8($sp)
+	# done loading n
 	pop($t0)
 	eval_comp(ble, $v0, $t0, $v0)
 	beq $v0, $zero, L2
@@ -44,7 +52,9 @@ L3:
 	lw $v0 0($sp)
 	# done loading j
 	push($v0)
-	li $v0 5
+	# loading n
+	lw $v0 12($sp)
+	# done loading n
 	pop($t0)
 	eval_comp(ble, $v0, $t0, $v0)
 	beq $v0, $zero, L5
@@ -113,5 +123,6 @@ L2:
 	li $v0 11
 	li $a0 10
 	syscall
+	pop($v0)
 	pop($v0)
 	pop($v0)
