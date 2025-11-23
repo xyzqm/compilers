@@ -13,5 +13,5 @@ begin
     i := i + 1;
     writeln();
 end;
-writeln(j);
+writeln(j); // should be 0 since the local j has been destroyed
 end;

@@ -1,6 +1,8 @@
 package ast;
 
 import java.util.List;
+
+import emitter.Emitter;
 import environment.Environment;
 
 /**
@@ -8,7 +10,7 @@ import environment.Environment;
  * @author Daniel Zhu
  * @version 1.0
  */
-public class ProcedureDeclaration
+public class ProcedureDeclaration implements Node
 {
     /**
      * The name of the procedure.
@@ -60,4 +62,20 @@ public class ProcedureDeclaration
         }
         return procEnv.get(name);
     }
+
+	@Override
+	public void compile(Emitter e)
+	{
+	    e.emit(name + ":");
+		e.pushEnv(); // create a new environment for function body
+		int offset = -parameters.size() * 4;
+		for (String param : parameters)
+		{
+		    e.setAddr(param, offset += 4);
+		}
+		body.compile(e);
+		e.emit(name + "_return:");
+		e.popEnv(); // pop all variables in this scope
+		e.emit("jr $ra");
+	}
 }

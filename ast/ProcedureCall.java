@@ -65,7 +65,13 @@ public class ProcedureCall implements Expression, Statement
     @Override
     public void compile(Emitter e)
     {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'compile'");
+        e.emitPush("$ra");
+        for (Expression arg : arguments)
+        {
+            arg.compile(e);
+            e.emitPush("$v0");
+        }
+        e.emit("jal " + name);
+        e.emitPop("$ra");
     }
 }

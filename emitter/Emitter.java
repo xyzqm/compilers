@@ -163,6 +163,11 @@ public class Emitter extends Environment
         emit("pop(" + reg + ")");
     }
 
+    public void setAddr(String var, int offset)
+    {
+        env.put(var, stackHeight + offset);
+    }
+
     /**
      * Returns the stack address for a variable, allocating space if needed.
      * @param var The variable.

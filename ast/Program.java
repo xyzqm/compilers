@@ -42,8 +42,16 @@ public class Program extends Environment
     public void compile(String filename)
     {
         Emitter e = new Emitter(filename);
+        e.pushEnv();
         e.emit("main:");
         body.compile(e);
+        e.emit("li $v0 10");
+        e.emit("syscall");
+        e.popEnv();
+        for (ProcedureDeclaration proc : procs.values())
+        {
+            proc.compile(e);
+        }
         e.close();
     }
 }

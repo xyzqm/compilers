@@ -12,7 +12,7 @@ public class Environment extends HashMap<String, Integer>
 {
     Environment parent;
 
-    private HashMap<String, ProcedureDeclaration> procs = new HashMap<>();
+    protected HashMap<String, ProcedureDeclaration> procs = new HashMap<>();
 
     private int offset = 0;
 
