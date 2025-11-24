@@ -71,11 +71,15 @@ public class ProcedureDeclaration implements Node
 		int offset = -parameters.size() * 4;
 		for (String param : parameters)
 		{
-		    e.setAddr(param, offset += 4);
+		    e.setAddr(param, offset);
+			offset += 4;
 		}
+		assert(offset == 0);
+		e.setAddr(name, offset);
 		body.compile(e);
 		e.emit(name + "_return:");
-		e.popEnv(); // pop all variables in this scope
+		e.getVar(new Var(name), "$v0");
+		e.revertEnv();
 		e.emit("jr $ra");
 	}
 }

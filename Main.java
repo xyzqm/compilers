@@ -37,7 +37,6 @@ public class Main
         Program p = parser.parseProgram();
         // p.execute();
         p.compile("out.asm");
-        // p.execute();
         // p.compile("out.asm");
         // Statement st = new Writeln(new Num("5"));
         // var st = new BinOp(

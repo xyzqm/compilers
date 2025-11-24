@@ -32,6 +32,6 @@ public class Readln implements Statement
     {
         e.emit("li $v0, 5");
         e.emit("syscall");
-        e.writeVar(var);
+        e.writeVar(var, "$v0");
     }
 }

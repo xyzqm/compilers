@@ -34,6 +34,6 @@ public class Assign implements Statement
     public void compile(Emitter e)
     {
         expr.compile(e);
-        e.writeVar(id);
+        e.writeVar(id, "$v0");
     }
 }

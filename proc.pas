@@ -1,13 +1,9 @@
-procedure basic(x, y);
+procedure fact(n);
 begin
-    writeln(x);
-    writeln(y);
-    writeln(z);
-    writeln(x + y);
+    if n <= 1 then fact := 1
+    else fact := n * fact(n - 1);
 end;
 
 begin
-x := 3;
-z := 5;
-basic(4, 3 * 5 + x);
+WRITELN(fact(10));
 end;

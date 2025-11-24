@@ -14,8 +14,6 @@ public class Environment extends HashMap<String, Integer>
 
     protected HashMap<String, ProcedureDeclaration> procs = new HashMap<>();
 
-    private int offset = 0;
-
     /**
      * Constructs an environment with a parent.
      * @param parent The parent environment.
@@ -23,7 +21,6 @@ public class Environment extends HashMap<String, Integer>
     public Environment(Environment parent)
     {
         this.parent = parent;
-        this.offset = parent.offset;
     }
 
     /**
@@ -75,45 +72,6 @@ public class Environment extends HashMap<String, Integer>
             return parent.containsKey(key);
         }
         return contains;
-    }
-
-    /**
-     * Gets the offset for a variable, allocating space if needed.
-     * @param var The variable name.
-     * @return The offset for the variable.
-     */
-    public int getOffset(String var)
-    {
-        if (containsKey(var))
-        {
-            return get(var);
-        }
-        else
-        {
-            offset += 4;
-            put(var, offset);
-            return offset;
-        }
-    }
-
-    /**
-     * Gets the current offset value.
-     * @return The current offset.
-     */
-    public int getOffset()
-    {
-        return offset;
-    }
-
-    /**
-     * Updates the parent environment's offset to match this environment.
-     */
-    public void updateParentOffset()
-    {
-        if (parent != null)
-        {
-            parent.offset = offset;
-        }
     }
 
     /**

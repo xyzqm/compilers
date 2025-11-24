@@ -48,11 +48,16 @@ public class If implements Statement
         e.emit("beq $v0, 1, " + thn); // jump to then case
         if (els != null)
         {
+            e.pushEnv();
             els.compile(e);
+            e.popEnv();
         }
+        // System.out.println(e.getStackHeight());
         e.emit("j " + end);
         e.emit(thn + ":");
+        e.pushEnv();
         then.compile(e);
+        e.popEnv();
         e.emit(end + ":");
     }
 }

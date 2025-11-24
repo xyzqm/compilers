@@ -105,9 +105,24 @@ public class Emitter extends Environment
     {
         for (int i = 0; i < env.size(); i++)
         {
-            emitPop("$v0");
+            emitPop("$t0");
         }
         env = env.getParent();
+    }
+
+    public void revertEnv()
+    {
+        env = env.getParent();
+    }
+
+    public Environment getEnv()
+    {
+        return env;
+    }
+
+    public int getStackHeight()
+    {
+        return stackHeight;
     }
 
     /**
@@ -199,10 +214,10 @@ public class Emitter extends Environment
      * Emits code to write a register value to a variable.
      * @param id The variable to write to.
      */
-    public void writeVar(Var id)
+    public void writeVar(Var id, String reg)
     {
         emit("# writing to " + id.name());
-        emit("sw $v0 " + address(id));
+        emit("sw " + reg + " " + address(id));
         emit("# done writing to " + id.name());
     }
 
