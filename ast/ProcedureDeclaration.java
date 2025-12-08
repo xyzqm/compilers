@@ -63,23 +63,23 @@ public class ProcedureDeclaration implements Node
         return procEnv.get(name);
     }
 
-	@Override
-	public void compile(Emitter e)
-	{
-	    e.emit(name + ":");
-		e.pushEnv(); // create a new environment for function body
-		int offset = -parameters.size() * 4;
-		for (String param : parameters)
-		{
-		    e.setAddr(param, offset);
-			offset += 4;
-		}
-		assert(offset == 0);
-		e.setAddr(name, offset);
-		body.compile(e);
-		e.emit(name + "_return:");
-		e.getVar(new Var(name), "$v0");
-		e.revertEnv();
-		e.emit("jr $ra");
-	}
+    @Override
+    public void compile(Emitter e)
+    {
+        e.emit(name + ":");
+        e.pushEnv(); // create a new environment for function body
+        int offset = -parameters.size() * 4;
+        for (String param : parameters)
+        {
+            e.setAddr(param, offset);
+            offset += 4;
+        }
+        assert(offset == 0);
+        e.setAddr(name, offset);
+        body.compile(e);
+        e.emit(name + "_return:");
+        e.getVar(new Var(name), "$v0");
+        e.revertEnv();
+        e.emit("jr $ra");
+    }
 }

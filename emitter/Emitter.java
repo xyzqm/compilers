@@ -110,16 +110,27 @@ public class Emitter extends Environment
         env = env.getParent();
     }
 
+    /**
+     * Reverts the environment to its parent.
+     */
     public void revertEnv()
     {
         env = env.getParent();
     }
 
+    /**
+     * Gets the current environment.
+     * @return The current environment.
+     */
     public Environment getEnv()
     {
         return env;
     }
 
+    /**
+     * Gets the current stack height.
+     * @return The stack height.
+     */
     public int getStackHeight()
     {
         return stackHeight;
@@ -158,6 +169,10 @@ public class Emitter extends Environment
      * Emits code to push a register onto the stack.
      * @param reg The register to push.
      */
+    /**
+     * Emits code to push a register onto the stack.
+     * @param reg The register to push.
+     */
     public void emitPush(String reg)
     {
         stackHeight += 4;
@@ -172,12 +187,21 @@ public class Emitter extends Environment
      * Emits code to pop a register from the stack.
      * @param reg The register to pop into.
      */
+    /**
+     * Emits code to pop a register from the stack.
+     * @param reg The register to pop into.
+     */
     public void emitPop(String reg)
     {
         stackHeight -= 4;
         emit("pop(" + reg + ")");
     }
 
+    /**
+     * Sets the stack address for a variable.
+     * @param var The variable name.
+     * @param offset The offset to add to the stack height.
+     */
     public void setAddr(String var, int offset)
     {
         env.put(var, stackHeight + offset);
@@ -213,6 +237,7 @@ public class Emitter extends Environment
     /**
      * Emits code to write a register value to a variable.
      * @param id The variable to write to.
+     * @param reg The register to write from.
      */
     public void writeVar(Var id, String reg)
     {

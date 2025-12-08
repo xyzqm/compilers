@@ -10,8 +10,14 @@ import ast.ProcedureDeclaration;
  */
 public class Environment extends HashMap<String, Integer>
 {
+    /**
+     * The parent environment.
+     */
     Environment parent;
 
+    /**
+     * Stores procedure declarations by name.
+     */
     protected HashMap<String, ProcedureDeclaration> procs = new HashMap<>();
 
     /**

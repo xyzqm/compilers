@@ -74,7 +74,7 @@ public class ProcedureCall implements Expression, Statement
         e.emitPush("$zero"); // for return value
         e.emit("jal " + name);
         e.emitPop("$v0");
-        for (Expression _ : arguments)
+        for (Expression argExpr : arguments)
         {
             e.emitPop("$t0");
         }
