@@ -76,10 +76,11 @@ public class ProcedureDeclaration implements Node
         }
         assert(offset == 0);
         e.setAddr(name, offset);
+        e.pushEnv();
         body.compile(e);
-        e.emit(name + "_return:");
+        e.popEnv();
         e.getVar(new Var(name), "$v0");
-        e.revertEnv();
+        e.revertEnv(); // revert rather than pop b/c pop happens in procedure call
         e.emit("jr $ra");
     }
 }

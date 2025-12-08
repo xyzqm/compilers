@@ -1,0 +1,7 @@
+PROCEDURE countUp(count, max);
+IF count <= max THEN
+BEGIN
+WRITELN(count);
+ignore := countUp(count + 1, max);
+END;
+x := countUp(2, 4);
