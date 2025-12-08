@@ -270,9 +270,6 @@ public class Emitter extends Environment
     /**
      * Closes the file. Should be called after all calls to emit.
      */
-    /**
-     * Closes the file. Should be called after all calls to emit.
-     */
     public void close()
     {
         out.close();
